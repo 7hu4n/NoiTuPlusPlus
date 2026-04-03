@@ -26,7 +26,8 @@ Cách dùng:
     + Paste toàn bộ https://github.com/7hu4n/NoiTuPlusPlus/blob/main/tampermonkey vào
     + Nhấn Ctrl + S để lưu
 
-- Bước cuối cùng: Load file từ điển
+
+### Bước cuối cùng: Load file từ điển (Cả 2 cách)
   + Click vào nút tròn (+)
   + 4 nút xuất hiện → click nút loadfile
   + Tải file https://github.com/7hu4n/NoiTuPlusPlus/blob/main/valid.txt về 
