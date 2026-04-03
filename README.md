@@ -1,15 +1,14 @@
-# Exploit tự động nối từ trong noitu.fun!
+# Exploit tự động nối từ trong noitu.fun.
 
 
 
 Cách dùng:
-c1 : Console (không cần cài gì)
+## C1 : Console (không cần cài gì)
 - vào website: https://www.noitu.fun
 - F12 trên bàn phím → chọn tab Console
 - Copy code trong "https://github.com/7hu4n/NoiTuPlusPlus/blob/main/console" và paste vào Console → nhấn Enter
 
-
-C2 : Tampermonkey (Dùng vv)
+## C2 : Tampermonkey (Dùng vv)
 - Cài extension Tampermonkey
 - Sau khi cài xong: Vào chrome://extensions
     + Bật Chế độ nhà phát triển (Developer mode)
