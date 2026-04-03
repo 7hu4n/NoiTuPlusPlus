@@ -25,8 +25,8 @@ Cách dùng:
 
 - Bước cuối cùng: Load file từ điển
   + Click vào nút tròn (+)
-  + 4 nút con sẽ bay ra → click nút loadfile
-  + Tải file vaild.txt về
-  + Chọn file vừa tải → script sẽ load từ điển thành công (nút sẽ hiện ✔)
+  + 4 nút xuất hiện → click nút loadfile
+  + Tải file https://github.com/7hu4n/NoiTuPlusPlus/blob/main/valid.txt về 
+  + Chọn file vừa tải → script sẽ load từ điển thành công 
 
 Done!
