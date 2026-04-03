@@ -19,7 +19,7 @@ Cách dùng:
     + Cho phép tập lệnh người dùng (Allow user scripts)
 
 - Click vào icon Tampermonkey (ở góc trên bên phải trình duyệt) 
-    + Chọn Dashboard (Bảng điều khiển)
+    + Chọn Dashboard (Bảng tổng quan)
 - Trong Dashboard:
     + Click dấu + ở góc trên bên phải
     + Xóa hết nội dung mặc định
