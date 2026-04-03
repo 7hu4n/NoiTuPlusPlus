@@ -3,7 +3,7 @@
 // @namespace https://www.noitu.fun
 // @author 7hu4n
 // @license MIT
-// @version 1.0
+// @version 1.2
 // @description .
 // @match https://www.noitu.fun/*
 // @match https://noitu.fun/*
@@ -152,7 +152,6 @@
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ff0000); }
             50% { transform: scale(1.3); filter: drop-shadow(0 0 15px #ff0000); }
         }
-
         #noitu-ui-box {
             position:fixed;
             bottom:20px;
@@ -196,7 +195,6 @@
             transform: scale(1) translateX(0);
             pointer-events: auto;
         }
-        /* Hiệu ứng bay ra sang tay phải */
         #noitu-ui-box .sub-menu .glass-btn {
             opacity: 0;
             transform: scale(0.3) translateX(-50px) !important;
@@ -210,6 +208,28 @@
         #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(2) { transition-delay: 60ms; }
         #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(3) { transition-delay: 120ms; }
         #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(4) { transition-delay: 180ms; }
+
+        .tanthuan-wave {
+            display: inline-block;
+            color: #00d2ff;
+            font-weight: bold;
+            text-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
+            animation: sea-wave 2.8s ease-in-out infinite;
+        }
+        @keyframes sea-wave {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-3px) rotate(3deg);
+            }
+            50% {
+                transform: translateY(2px) rotate(-2deg);
+            }
+            75% {
+                transform: translateY(-2px) rotate(2deg);
+            }
+        }
     `;
     document.documentElement.appendChild(style);
 
@@ -227,8 +247,8 @@
             tieuDe.classList.add('noitu-centered-title');
         }
         const dongPhu = document.querySelector('p.has-text-centered.is-size-5');
-        if (dongPhu && !dongPhu.innerHTML.includes('glowing-heart')) {
-            dongPhu.innerHTML = 'Made with <span class="glowing-heart">💗</span>';
+        if (dongPhu && !dongPhu.innerHTML.includes('tanthuan-wave')) {
+            dongPhu.innerHTML = `Made with <span class="glowing-heart">💗</span> - <span class="tanthuan-wave">TanThuan</span>`;
         }
     }
 
@@ -312,7 +332,6 @@
         masterBtn.innerHTML = isExpanded ? '×' : '+';
     };
 
-    /* Thứ tự append: Master trước → Sub sau (pop sang tay phải) */
     hopDieuKhien.appendChild(masterBtn);
     hopDieuKhien.appendChild(subMenu);
 
