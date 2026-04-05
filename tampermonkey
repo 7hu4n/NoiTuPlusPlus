@@ -3,7 +3,7 @@
 // @namespace    https://www.noitu.fun
 // @author       7hu4n
 // @license      MIT
-// @version      1.3
+// @version      1.3.1
 // @description  .
 // @match        https://www.noitu.fun/*
 // @match        https://noitu.fun/*
@@ -14,8 +14,10 @@
     'use strict';
     const antiAdsStyle = document.createElement('style');
     antiAdsStyle.innerHTML = `
+        [id*="google_ads_"], [class*="google_ads_"],
+        .google-vignette-test, #google_vignette, .vignette-reveal,
+        ins.adsbygoogle, div[data-ad-client],
         [class*="ads"], [id*="ads"], [id*="ad-"], [class*="ad-"],
-        ins.adsbygoogle, div[data-ad-client], div[id^="google_ads_"],
         .side-rail-ads, .adsense-banner, .ad-banner, .ad-container,
         iframe[src*="ads"], iframe[src*="google"], iframe[src*="doubleclick"],
         [class*="advert"], [class*="sponsor"], [class*="promotion"],
@@ -28,9 +30,9 @@
             opacity: 0 !important;
             pointer-events: none !important;
         }
-        script[src*="adsbygoogle"], script[src*="googlesyndication"],
-        script[src*="doubleclick"], script[src*="adnxs"] {
-            display: none !important;
+        html, body {
+            overflow: auto !important;
+            position: static !important;
         }
         .lucide-gamepad2, .lucide-gamepad-2,
         svg.lucide.lucide-gamepad2, svg.lucide.lucide-gamepad-2,
@@ -44,10 +46,8 @@
             overflow: visible !important;
             pointer-events: auto !important;
         }
-        .lucide-gamepad2 line,
-        .lucide-gamepad2 path,
-        .lucide-gamepad-2 line,
-        .lucide-gamepad-2 path {
+        .lucide-gamepad2 line, .lucide-gamepad2 path,
+        .lucide-gamepad-2 line, .lucide-gamepad-2 path {
             stroke: currentColor !important;
             opacity: 1 !important;
         }
