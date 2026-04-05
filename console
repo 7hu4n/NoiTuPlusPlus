@@ -1,6 +1,46 @@
 (function () {
     'use strict';
-
+    const antiAdsStyle = document.createElement('style');
+    antiAdsStyle.innerHTML = `
+        [class*="ads"], [id*="ads"], [id*="ad-"], [class*="ad-"],
+        ins.adsbygoogle, div[data-ad-client], div[id^="google_ads_"],
+        .side-rail-ads, .adsense-banner, .ad-banner, .ad-container,
+        iframe[src*="ads"], iframe[src*="google"], iframe[src*="doubleclick"],
+        [class*="advert"], [class*="sponsor"], [class*="promotion"],
+        .ad, .ads, .advertisement, .sponsored, .promo {
+            display: none !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        script[src*="adsbygoogle"], script[src*="googlesyndication"],
+        script[src*="doubleclick"], script[src*="adnxs"] {
+            display: none !important;
+        }
+        .lucide-gamepad2, .lucide-gamepad-2,
+        svg.lucide.lucide-gamepad2, svg.lucide.lucide-gamepad-2,
+        .game-title_roomBar__KySQA,
+        [class*="game-title_roomBar"] {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: auto !important;
+            width: auto !important;
+            overflow: visible !important;
+            pointer-events: auto !important;
+        }
+        .lucide-gamepad2 line,
+        .lucide-gamepad2 path,
+        .lucide-gamepad-2 line,
+        .lucide-gamepad-2 path {
+            stroke: currentColor !important;
+            opacity: 1 !important;
+        }
+    `;
+    document.documentElement.appendChild(antiAdsStyle);
     const style = document.createElement('style');
     style.innerHTML = `
         html, body, #__next, #main-wrapper, .main,
@@ -9,10 +49,77 @@
             background-color: #000000 !important;
             color: white !important;
         }
-        [class*="side-rail-ads"], [class*="adsense-banner"], ins.adsbygoogle,
-        div[data-ad-client], div[id^="google_ads_"] {
-            display: none !important;
-            height: 0px !important;
+        .user-modal_modalBox__CmHSF {
+            background: rgba(10, 10, 10, 0.9) !important;
+            border: 1px solid #ff0000 !important;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3) !important;
+            backdrop-filter: blur(15px) !important;
+            color: white !important;
+        }
+        .user-modal_avatarImg__YP90p {
+            border: 2px solid #ff0000 !important;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+        }
+        .user-modal_nameInput__Fqv0h, .user-modal_bioTextarea__DSGSB {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 0, 0, 0.3) !important;
+            color: white !important;
+            transition: all 0.3s ease !important;
+        }
+        .user-modal_nameInput__Fqv0h:focus, .user-modal_bioTextarea__DSGSB:focus {
+            border-color: #ff0000 !important;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.4) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+        .user-modal_tabsContainer__IkVAx li.is-active a {
+            background-color: rgba(255, 0, 0, 0.2) !important;
+            border-color: #ff0000 !important;
+            color: #ff0000 !important;
+            text-shadow: 0 0 5px #ff0000 !important;
+        }
+        .user-modal_tabsContainer__IkVAx a {
+            color: #888 !important;
+            border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        .user-modal_tabsContainer__IkVAx a:hover {
+            color: #ff0000 !important;
+        }
+        .user-modal_coinSection__LCNtB {
+            background: rgba(251, 191, 36, 0.1) !important;
+            border: 1px solid rgba(251, 191, 36, 0.4) !important;
+            padding: 5px 10px !important;
+            border-radius: 8px !important;
+        }
+        .user-modal_giftcodeBtn__XZZr5, .user-modal_actions__4Vohl .button {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid #ff0000 !important;
+            color: #ff0000 !important;
+            transition: all 0.2s ease !important;
+        }
+        .user-modal_giftcodeBtn__XZZr5:hover, .user-modal_actions__4Vohl .button:hover {
+            background: rgba(255, 0, 0, 0.1) !important;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.4) !important;
+            transform: translateY(-2px) !important;
+        }
+        .multiple-mode-lobby_roomBox__r6fVt,
+        .multiple-mode-lobby_searchingBox__Z0JT6 {
+         background: transparent !important;
+         border: 2px solid #ff0000 !important;
+         box-shadow: none !important;
+        }
+       .multiple-mode-lobby_roomBox__r6fVt *,
+       .multiple-mode-lobby_searchingBox__Z0JT6 * {
+        color: #ff0000 !important;
+        }
+        .GiftSection_section__z92Gg {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px dashed rgba(255, 0, 0, 0.3) !important;
+            border-radius: 10px !important;
+        }
+        progress.progress::-webkit-progress-value {
+            background: linear-gradient(90deg, #000, #ff0000, #000) !important;
+            background-size: 200% auto !important;
+            animation: head-gradient 3s linear infinite !important;
         }
         .breadcrumb,
         .base-header_bellPosition__e5rVd,
@@ -77,11 +184,6 @@
             border: none !important;
             box-shadow: 0 0 12px rgba(255, 0, 0, 0.4) !important;
         }
-        progress.progress::-webkit-progress-value {
-            background: linear-gradient(90deg, #000, #ff0000, #000) !important;
-            background-size: 200% auto !important;
-            animation: head-gradient 3s linear infinite !important;
-        }
         .glass-btn {
             backdrop-filter: blur(10px) !important;
             background: rgba(255, 255, 255, 0.05) !important;
@@ -104,8 +206,8 @@
         .nut-nap:hover { box-shadow: 0 0 15px #00d2ff !important; }
         .nut-tim { border-color: #9d50bb !important; color: #9d50bb !important; }
         .nut-tim:hover { box-shadow: 0 0 15px #9d50bb !important; }
-        .nut-an-toan { border-color: #00ff87 !important; color: #00ff87 !important; }
-        .nut-an-toan:hover { box-shadow: 0 0 15px #00ff87 !important; }
+        .nut-speed { border-color: #f7971e !important; color: #f7971e !important; }
+        .nut-speed:hover { box-shadow: 0 0 15px #f7971e !important; }
         .nut-turbo { border-color: #ff0000 !important; color: #ff0000 !important; }
         .nut-turbo:hover { box-shadow: 0 0 15px #ff0000 !important; }
         .nut-dang-dung {
@@ -191,40 +293,107 @@
             opacity: 1 !important;
             transform: scale(1) translateX(0) !important;
         }
-        #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(1) { transition-delay: 0ms; }
-        #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(2) { transition-delay: 60ms; }
-        #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(3) { transition-delay: 120ms; }
-        #noitu-ui-box.expanded .sub-menu .glass-btn:nth-child(4) { transition-delay: 180ms; }
         .tanthuan-wave {
-            display: inline-block;
-            color: #00d2ff;
-            font-weight: bold;
+            display: inline-block; color: #00d2ff; font-weight: bold;
             text-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
             animation: sea-wave 2.8s ease-in-out infinite;
         }
         @keyframes sea-wave {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-3px) rotate(3deg);
-            }
-            50% {
-                transform: translateY(2px) rotate(-2deg);
-            }
-            75% {
-                transform: translateY(-2px) rotate(2deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-3px) rotate(3deg); }
+            50% { transform: translateY(2px) rotate(-2deg); }
+            75% { transform: translateY(-2px) rotate(2deg); }
+        }
+        /* ==================== SHOP MODAL THEME ==================== */
+        .modal-card {
+            background: rgba(10, 10, 10, 0.95) !important;
+            border: 2px solid #ff0000 !important;
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.5) !important;
+            backdrop-filter: blur(20px) !important;
+        }
+        .modal-card-head {
+            background: rgba(15, 15, 15, 0.95) !important;
+            border-bottom: 1px solid #ff0000 !important;
+        }
+        .tabs.is-toggle li.is-active a {
+            background-color: rgba(255, 0, 0, 0.25) !important;
+            border-color: #ff0000 !important;
+            color: #ff0000 !important;
+            text-shadow: 0 0 8px #ff0000 !important;
+        }
+        .ShopModal_itemGrid__wr8Zh {
+            gap: 12px !important;
+        }
+        .ShopModal_itemCard__F6Eao {
+            background: rgba(255,255,255,0.04) !important;
+            border: 1px solid rgba(255,0,0,0.3) !important;
+            border-radius: 14px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 0 15px rgba(255,0,0,0.15) !important;
+        }
+        .ShopModal_itemCard__F6Eao:hover {
+            transform: translateY(-6px) scale(1.03) !important;
+            border-color: #ff0000 !important;
+            box-shadow: 0 0 30px rgba(255,0,0,0.6) !important;
+        }
+        .ShopModal_itemName__zt5_U {
+            color: #ff0000 !important;
+            text-shadow: 0 0 10px rgba(255,0,0,0.7) !important;
+        }
+        .ShopModal_itemDesc__31PCU {
+            color: #bbbbbb !important;
+        }
+        .ShopModal_itemPrice__ce3r_ {
+            color: #fbbf24 !important;
+            text-shadow: 0 0 8px rgba(251,191,36,0.6) !important;
+        }
+        .ShopModal_itemAction__G7ERr .button {
+            background: rgba(255,255,255,0.06) !important;
+            border: 1px solid #ff0000 !important;
+            color: #ff0000 !important;
+            transition: all 0.25s ease !important;
+        }
+        .ShopModal_itemAction__G7ERr .button:hover {
+            background: rgba(255,0,0,0.15) !important;
+            box-shadow: 0 0 20px #ff0000 !important;
+            transform: translateY(-2px) !important;
+        }
+        .tag.is-danger.is-light {
+            background-color: rgba(255,0,0,0.2) !important;
+            color: #ff0000 !important;
+            border: 1px solid #ff0000 !important;
+        }
+        .UserAvatar_wrapper__AZyFE {
+            box-shadow: 0 0 20px rgba(255,0,0,0.4) !important;
+            transition: all 0.3s ease !important;
+        }
+        .modal-close {
+            color: #ff0000 !important;
+            filter: drop-shadow(0 0 8px #ff0000) !important;
+        }
+        .ShopModal_itemCard__F6Eao {
+            background: #000000 !important;
+        }
+        .modal-card-body {
+            background: #000000 !important;
+        }
+        .modal-background {
+            background: transparent !important;
         }
     `;
     document.documentElement.appendChild(style);
-
     let tuDienTong = [];
     let tuDaDung = new Set();
+    let thongKeAmDau = {};
     let dangChayTuDong = false;
     let vongLapTuDong = null;
-    let cheDoHienTai = 'an-toan';
+    let tocDoCustom = 500;
     let isExpanded = false;
+    let tuDienDaTai = false;
+
+    let tuHienTaiTrenSan = "";
+    let coTheHienThiGoiY = false;
+    let timerDelayGoiY = null;
 
     function capNhatGiaoDienGoc() {
         const tieuDe = document.querySelector('.title.is-1') || document.querySelector('h1');
@@ -237,7 +406,6 @@
             dongPhu.innerHTML = `Made with <span class="glowing-heart">💗</span> - <span class="tanthuan-wave">TanThuan</span>`;
         }
     }
-
     function ganGiaTriInput(oNhap, giaTri) {
         if (!oNhap) return;
         const giaTriCu = oNhap.value;
@@ -247,15 +415,30 @@
         oNhap.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
+    function timTuOutplay(danhSach) {
+        if (!danhSach || danhSach.length === 0) return null;
+        return danhSach.sort((a, b) => {
+            const amCuoiA = a.toLowerCase().split(/\s+/).pop();
+            const amCuoiB = b.toLowerCase().split(/\s+/).pop();
+            const diemA = thongKeAmDau[amCuoiA] || 0;
+            const diemB = thongKeAmDau[amCuoiB] || 0;
+            return diemA - diemB;
+        })[0];
+    }
+
     function logicGuiTu(laTuDong = true) {
         if (laTuDong) {
             const nutChoiLai = document.querySelector('button[class*="game-result-modal_playAgainBtn"]');
             if (nutChoiLai) { tuDaDung.clear(); nutChoiLai.click(); return; }
+            const nutNgauNhien = document.querySelector('.ranked-lobby_rankCardRandom__Br_il');
+            if (nutNgauNhien) { tuDaDung.clear(); nutNgauNhien.click(); return; }
         }
         const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
         if (!thanhPhanChu) return;
         const amCuoi = thanhPhanChu.textContent.trim().toLowerCase().split(/\s+/).pop();
-        const tuTiepTheo = tuDienTong.find(t => !tuDaDung.has(t) && t.toLowerCase().startsWith(amCuoi + " "));
+        const danhSachHopLe = tuDienTong.filter(t => !tuDaDung.has(t) && t.toLowerCase().startsWith(amCuoi + " "));
+        const tuTiepTheo = timTuOutplay(danhSachHopLe);
+
         if (tuTiepTheo) {
             const oNhap = document.querySelector('input.input');
             const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
@@ -263,8 +446,7 @@
                 ganGiaTriInput(oNhap, tuTiepTheo);
                 tuDaDung.add(tuTiepTheo);
                 if (laTuDong) {
-                    let tre = (cheDoHienTai === 'turbo') ? 0 : 500;
-                    setTimeout(() => { if (nutGui) nutGui.click(); }, tre);
+                    setTimeout(() => { if (nutGui) nutGui.click(); }, 100);
                 }
             }
         } else if (laTuDong) {
@@ -275,7 +457,6 @@
 
     const hopDieuKhien = document.createElement('div');
     hopDieuKhien.id = 'noitu-ui-box';
-
     function taoNut(vanBan, lopCss, hanhDong) {
         const nut = document.createElement('button');
         nut.innerHTML = vanBan;
@@ -283,37 +464,42 @@
         nut.onclick = hanhDong;
         return nut;
     }
-
-    const nutNapTuDien = taoNut('loadfile', 'nut-nap', () => {
-        const dauVao = document.createElement('input'); 
-        dauVao.type = 'file'; 
-        dauVao.accept = '.txt'; 
-        dauVao.style.display = 'none';
-        document.body.appendChild(dauVao); 
-        dauVao.click();
+    const nutNapTuDien = taoNut('Load', 'nut-nap', () => {
+        const dauVao = document.createElement('input'); dauVao.type = 'file'; dauVao.accept = '.txt'; dauVao.style.display = 'none';
+        document.body.appendChild(dauVao); dauVao.click();
         dauVao.onchange = e => {
             const tep = e.target.files[0];
             const trinhDoc = new FileReader();
             trinhDoc.onload = ev => {
-                tuDienTong = ev.target.result.split(/\r?\n/).map(d => d.trim()).filter(d => d.split(/\s+/).length === 2);
+                const lines = ev.target.result.split(/\r?\n/);
+                tuDienTong = lines.map(d => d.trim()).filter(d => d.split(/\s+/).length === 2);
+                thongKeAmDau = {};
+                tuDienTong.forEach(tu => {
+                    const chuDau = tu.toLowerCase().split(/\s+/)[0];
+                    thongKeAmDau[chuDau] = (thongKeAmDau[chuDau] || 0) + 1;
+                });
+
                 tuDaDung.clear();
+                tuDienDaTai = true;
                 nutNapTuDien.innerHTML = '✔';
             };
             trinhDoc.readAsText(tep);
         };
     });
-
-    const nutTimManual = taoNut('🔍', 'nut-tim', () => logicGuiTu(false));
-    const nutAutoSafe = taoNut('Auto bot (slow)', 'nut-an-toan', () => kichHoatTuDong('an-toan'));
-    const nutAutoTurbo = taoNut('Auto bot (nhanh)', 'nut-turbo', () => kichHoatTuDong('turbo'));
-
+    const nutChinhSpeed = taoNut(`Speed: ${tocDoCustom}ms`, 'nut-speed', () => {
+        let inputSpeed = prompt("Nhập tốc độ (ms):", tocDoCustom);
+        if (inputSpeed !== null && !isNaN(inputSpeed) && inputSpeed > 0) {
+            tocDoCustom = parseInt(inputSpeed);
+            nutChinhSpeed.innerHTML = `Speed: ${tocDoCustom}ms`;
+            if (dangChayTuDong) kichHoatTuDong();
+        }
+    });
+    const nutAutoTurbo = taoNut('Auto', 'nut-turbo', () => kichHoatTuDong());
     const subMenu = document.createElement('div');
     subMenu.className = 'sub-menu';
     subMenu.appendChild(nutNapTuDien);
-    subMenu.appendChild(nutTimManual);
-    subMenu.appendChild(nutAutoSafe);
+    subMenu.appendChild(nutChinhSpeed);
     subMenu.appendChild(nutAutoTurbo);
-
     const masterBtn = document.createElement('button');
     masterBtn.className = 'master-btn';
     masterBtn.innerHTML = '+';
@@ -322,64 +508,213 @@
         hopDieuKhien.classList.toggle('expanded', isExpanded);
         masterBtn.innerHTML = isExpanded ? '×' : '+';
     };
-
     hopDieuKhien.appendChild(masterBtn);
     hopDieuKhien.appendChild(subMenu);
-
-    function kichHoatTuDong(cheDo) {
-        if (dangChayTuDong && cheDoHienTai === cheDo) {
-            dangChayTuDong = false; 
-            clearInterval(vongLapTuDong);
-            cheDoHienTai = 'none'; 
-            capNhatTrangThaiNut(); 
-            return;
+    function kichHoatTuDong() {
+        if (dangChayTuDong) {
+            dangChayTuDong = false; clearInterval(vongLapTuDong);
+            capNhatTrangThaiNut(); return;
         }
-        clearInterval(vongLapTuDong); 
-        dangChayTuDong = true; 
-        cheDoHienTai = cheDo;
+        clearInterval(vongLapTuDong);
+        dangChayTuDong = true;
         capNhatTrangThaiNut();
-        const tocDo = (cheDo === 'turbo') ? 300 : 1200;
-        vongLapTuDong = setInterval(() => logicGuiTu(true), tocDo);
+        vongLapTuDong = setInterval(() => logicGuiTu(true), tocDoCustom);
+    }
+    function capNhatTrangThaiNut() {
+        if (!dangChayTuDong) {
+            nutAutoTurbo.classList.remove('nut-dang-dung');
+            nutAutoTurbo.innerHTML = 'Auto bot';
+        } else {
+            nutAutoTurbo.classList.add('nut-dang-dung');
+            nutAutoTurbo.innerHTML = 'stop';
+        }
     }
 
-    function capNhatTrangThaiNut() {
-        nutAutoSafe.classList.remove('nut-dang-dung');
-        nutAutoTurbo.classList.remove('nut-dang-dung');
-        if (!dangChayTuDong) {
-            nutAutoSafe.style.opacity = nutAutoTurbo.style.opacity = "1";
-            nutAutoSafe.innerHTML = 'Auto bot (slow)'; 
-            nutAutoTurbo.innerHTML = 'Auto bot (nhanh)';
-        } else {
-            if (cheDoHienTai === 'an-toan') {
-                nutAutoSafe.classList.add('nut-dang-dung'); 
-                nutAutoSafe.innerHTML = 'stop';
-                nutAutoTurbo.style.opacity = "0.3";
-            } else {
-                nutAutoTurbo.classList.add('nut-dang-dung'); 
-                nutAutoTurbo.innerHTML = 'stop';
-                nutAutoSafe.style.opacity = "0.3";
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
+            if (nutGui) {
+                nutGui.click();
             }
         }
-    }
+    });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const oNhap = document.querySelector('input.input');
-            if (!dangChayTuDong && oNhap && document.activeElement === oNhap) {
-                if (oNhap.value.trim() === "") {
-                    e.preventDefault();
-                    logicGuiTu(false);
+    const canvas = document.createElement('canvas');
+    canvas.id = 'noitu-particle-canvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.zIndex = '0';
+    canvas.style.pointerEvents = 'none';
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    const particles = [];
+    const numParticles = 80;
+    const maxDistance = 150;
+    for (let i = 0; i < numParticles; i++) {
+        particles.push({
+            x: Math.random() * 1920,
+            y: Math.random() * 1080,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5,
+            radius: Math.random() * 2 + 1.5
+        });
+    }
+    function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < numParticles; i++) {
+            let p = particles[i];
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fill();
+        }
+        for (let i = 0; i < numParticles; i++) {
+            for (let j = i + 1; j < numParticles; j++) {
+                let p1 = particles[i]; let p2 = particles[j];
+                let dx = p1.x - p2.x; let dy = p1.y - p2.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < maxDistance) {
+                    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                    let alpha = 1 - (dist / maxDistance);
+                    ctx.strokeStyle = `rgba(255, 0, 0, ${alpha})`;
+                    ctx.lineWidth = 1; ctx.stroke();
                 }
             }
         }
-    }, true);
-
+        requestAnimationFrame(animateParticles);
+    }
     setInterval(() => {
         capNhatGiaoDienGoc();
-        if (!document.getElementById('noitu-ui-box')) document.body.appendChild(hopDieuKhien);
+        if (!document.getElementById('noitu-ui-box') && document.body) {
+            document.body.appendChild(hopDieuKhien);
+        }
+        if (document.body && !document.getElementById('noitu-particle-canvas')) {
+            document.body.appendChild(canvas);
+            resize();
+            animateParticles();
+        }
     }, 200);
 
-    capNhatGiaoDienGoc();
+const suggestBox = document.createElement('div');
+suggestBox.id = 'noitu-suggest-box';
+document.body.appendChild(suggestBox);
+const suggestStyle = document.createElement('style');
+suggestStyle.innerHTML = `
+#noitu-suggest-box {
+    position: fixed;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 220px;
+    max-height: 60vh;
+    overflow-y: auto;
+    z-index: 999999;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    backdrop-filter: none !important;
+    padding: 10px;
+    border-radius: 10px;
+}
+.noitu-word-item {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border: 1px solid #ff0000 !important;
+    color: #ff0000 !important;
+    background: transparent !important;
+    cursor: pointer;
+    transition: 0.15s;
+    display: flex;
+    justify-content: space-between;
+}
+.noitu-word-item:hover {
+    background: transparent !important;
+    transform: translateX(4px);
+}
+.noitu-word-item span.difficulty {
+    font-size: 10px;
+    opacity: 0.7;
+}
+.noitu-status-msg {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    color: #ff0000 !important;
+    background: transparent !important;
+    border: none !important;
+    text-align: center;
+}
+`;
+document.documentElement.appendChild(suggestStyle);
 
+function capNhatSuggestBox() {
+    const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
+    const wordOnScreen = thanhPhanChu ? thanhPhanChu.textContent.trim() : "";
+
+    if (wordOnScreen !== tuHienTaiTrenSan) {
+        tuHienTaiTrenSan = wordOnScreen;
+        coTheHienThiGoiY = false;
+        clearTimeout(timerDelayGoiY);
+
+        if (wordOnScreen !== "") {
+            timerDelayGoiY = setTimeout(() => {
+                coTheHienThiGoiY = true;
+            }, 700);
+        }
+    }
+
+    suggestBox.innerHTML = '';
+    if (!tuDienDaTai || !thanhPhanChu) {
+        return;
+    }
+
+    const amCuoi = wordOnScreen.toLowerCase().split(/\s+/).pop();
+    let danhSach = tuDienTong.filter(t =>
+        !tuDaDung.has(t) &&
+        t.toLowerCase().startsWith(amCuoi + " ")
+    );
+
+    danhSach.sort((a, b) => {
+        const cA = a.toLowerCase().split(/\s+/).pop();
+        const cB = b.toLowerCase().split(/\s+/).pop();
+        return (thongKeAmDau[cA] || 0) - (thongKeAmDau[cB] || 0);
+    });
+
+    if (danhSach.length === 0) {
+        const msg = document.createElement('div');
+        msg.className = 'noitu-status-msg';
+        msg.textContent = 'hết từ rồi :( ';
+        suggestBox.appendChild(msg);
+    } else {
+        danhSach.slice(0, 30).forEach(word => {
+            const div = document.createElement('div');
+            div.className = 'noitu-word-item';
+
+            const amCuoiCuaTu = word.toLowerCase().split(/\s+/).pop();
+            const soTuNoi = thongKeAmDau[amCuoiCuaTu] || 0;
+
+            div.innerHTML = `<span>${word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}</span> <span class="difficulty">[${soTuNoi}]</span>`;
+
+            div.onclick = () => {
+                const oNhap = document.querySelector('input.input');
+                ganGiaTriInput(oNhap, word);
+                if (oNhap) oNhap.focus();
+            };
+            suggestBox.appendChild(div);
+        });
+    }
+}
+setInterval(capNhatSuggestBox, 300);
+    capNhatGiaoDienGoc();
     console.log('%cConsole mode', 'color:#ff0000; font-weight:bold');
 })();
