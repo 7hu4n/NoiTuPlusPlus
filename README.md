@@ -40,7 +40,7 @@ Done!
    - Thêm nút custom tốc độ cho Auto
    - Thêm bảng display từ gợi ý có thể nối
    - Cải tiến về UI/UX
-   - Cải tiến thuận toán chọn từ cho Auto (Thuật toán DEE)
+   - Cải tiến thuận toán chọn từ cho Auto
    - Cải tiến Anti Ads
    - Thêm tính năng tự vào trận Ranked/Online (https://www.noitu.fun/rank)
 
