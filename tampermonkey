@@ -11,666 +11,663 @@
 // @grant        none
 // ==/UserScript==
 (function () {
-    'use strict';
-    const antiAdsStyle = document.createElement('style');
-    antiAdsStyle.innerHTML = `
-        [id*="google_ads_"], [class*="google_ads_"],
-        .google-vignette-test, #google_vignette, .vignette-reveal,
-        ins.adsbygoogle, div[data-ad-client],
-        [class*="ads"], [id*="ads"], [id*="ad-"], [class*="ad-"],
-        .side-rail-ads, .adsense-banner, .ad-banner, .ad-container,
-        iframe[src*="ads"], iframe[src*="google"], iframe[src*="doubleclick"],
-        [class*="advert"], [class*="sponsor"], [class*="promotion"],
-        .ad, .ads, .advertisement, .sponsored, .promo {
-            display: none !important;
-            height: 0 !important;
-            width: 0 !important;
-            overflow: hidden !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-        html, body {
-            overflow: auto !important;
-            position: static !important;
-        }
-        .lucide-gamepad2, .lucide-gamepad-2,
-        svg.lucide.lucide-gamepad2, svg.lucide.lucide-gamepad-2,
-        .game-title_roomBar__KySQA,
-        [class*="game-title_roomBar"] {
-            display: inline-block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            height: auto !important;
-            width: auto !important;
-            overflow: visible !important;
-            pointer-events: auto !important;
-        }
-        .lucide-gamepad2 line, .lucide-gamepad2 path,
-        .lucide-gamepad-2 line, .lucide-gamepad-2 path {
-            stroke: currentColor !important;
-            opacity: 1 !important;
-        }
-    `;
-    document.documentElement.appendChild(antiAdsStyle);
-    const style = document.createElement('style');
-    style.innerHTML = `
-        html, body, #__next, #main-wrapper, .main,
-        [class*="page_mainContent"], [class*="page_holidayContent"] {
-            background: #000000 !important;
-            background-color: #000000 !important;
-            color: white !important;
-        }
-        .user-modal_modalBox__CmHSF {
-            background: rgba(10, 10, 10, 0.9) !important;
-            border: 1px solid #ff0000 !important;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3) !important;
-            backdrop-filter: blur(15px) !important;
-            color: white !important;
-        }
-        .user-modal_avatarImg__YP90p {
-            border: 2px solid #ff0000 !important;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
-        }
-        .user-modal_nameInput__Fqv0h, .user-modal_bioTextarea__DSGSB {
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 0, 0, 0.3) !important;
-            color: white !important;
-            transition: all 0.3s ease !important;
-        }
-        .user-modal_nameInput__Fqv0h:focus, .user-modal_bioTextarea__DSGSB:focus {
-            border-color: #ff0000 !important;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.4) !important;
-            background: rgba(255, 255, 255, 0.08) !important;
-        }
-        .user-modal_tabsContainer__IkVAx li.is-active a {
-            background-color: rgba(255, 0, 0, 0.2) !important;
-            border-color: #ff0000 !important;
-            color: #ff0000 !important;
-            text-shadow: 0 0 5px #ff0000 !important;
-        }
-        .user-modal_tabsContainer__IkVAx a {
-            color: #888 !important;
-            border-bottom-color: rgba(255, 255, 255, 0.1) !important;
-        }
-        .user-modal_tabsContainer__IkVAx a:hover {
-            color: #ff0000 !important;
-        }
-        .user-modal_coinSection__LCNtB {
-            background: rgba(251, 191, 36, 0.1) !important;
-            border: 1px solid rgba(251, 191, 36, 0.4) !important;
-            padding: 5px 10px !important;
-            border-radius: 8px !important;
-        }
-        .user-modal_giftcodeBtn__XZZr5, .user-modal_actions__4Vohl .button {
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid #ff0000 !important;
-            color: #ff0000 !important;
-            transition: all 0.2s ease !important;
-        }
-        .user-modal_giftcodeBtn__XZZr5:hover, .user-modal_actions__4Vohl .button:hover {
-            background: rgba(255, 0, 0, 0.1) !important;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.4) !important;
-            transform: translateY(-2px) !important;
-        }
-        .multiple-mode-lobby_roomBox__r6fVt,
-        .multiple-mode-lobby_searchingBox__Z0JT6 {
-         background: transparent !important;
-         border: 2px solid #ff0000 !important;
-         box-shadow: none !important;
-        }
-       .multiple-mode-lobby_roomBox__r6fVt *,
-       .multiple-mode-lobby_searchingBox__Z0JT6 * {
+'use strict';
+
+const antiAdsStyle = document.createElement('style');
+antiAdsStyle.innerHTML = `
+    [id*="google_ads_"], [class*="google_ads_"],
+    .google-vignette-test, #google_vignette, .vignette-reveal,
+    ins.adsbygoogle, div[data-ad-client],
+    [class*="ads"], [id*="ads"], [id*="ad-"], [class*="ad-"],
+    .side-rail-ads, .adsense-banner, .ad-banner, .ad-container,
+    iframe[src*="ads"], iframe[src*="google"], iframe[src*="doubleclick"],
+    [class*="advert"], [class*="sponsor"], [class*="promotion"],
+    .ad, .ads, .advertisement, .sponsored, .promo {
+        background: transparent !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        user-select: none !important;
+    }
+    html, body {
+        overflow: auto !important;
+        position: static !important;
+    }
+    .lucide-gamepad2, .lucide-gamepad-2,
+    svg.lucide.lucide-gamepad2, svg.lucide.lucide-gamepad-2,
+    .game-title_roomBar__KySQA,
+    [class*="game-title_roomBar"] {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: visible !important;
+        pointer-events: auto !important;
+    }
+    .lucide-gamepad2 line, .lucide-gamepad2 path,
+    .lucide-gamepad-2 line, .lucide-gamepad-2 path {
+        stroke: currentColor !important;
+        opacity: 1 !important;
+    }
+`;
+document.documentElement.appendChild(antiAdsStyle);
+
+const style = document.createElement('style');
+style.innerHTML = `
+    html, body, #__next, #main-wrapper, .main,
+    [class*="page_mainContent"], [class*="page_holidayContent"] {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        color: white !important;
+    }
+    .user-modal_modalBox__CmHSF {
+        background: rgba(10, 10, 10, 0.9) !important;
+        border: 1px solid #ff0000 !important;
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.3) !important;
+        backdrop-filter: blur(15px) !important;
+        color: white !important;
+    }
+    .user-modal_avatarImg__YP90p {
+        border: 2px solid #ff0000 !important;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+    }
+    .user-modal_nameInput__Fqv0h, .user-modal_bioTextarea__DSGSB {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 0, 0, 0.3) !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+    }
+    .user-modal_nameInput__Fqv0h:focus, .user-modal_bioTextarea__DSGSB:focus {
+        border-color: #ff0000 !important;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+    .user-modal_tabsContainer__IkVAx li.is-active a {
+        background-color: rgba(255, 0, 0, 0.2) !important;
+        border-color: #ff0000 !important;
         color: #ff0000 !important;
-        }
-        .GiftSection_section__z92Gg {
-            background: rgba(255, 255, 255, 0.03) !important;
-            border: 1px dashed rgba(255, 0, 0, 0.3) !important;
-            border-radius: 10px !important;
-        }
-        progress.progress::-webkit-progress-value {
-            background: linear-gradient(90deg, #000, #ff0000, #000) !important;
-            background-size: 200% auto !important;
-            animation: head-gradient 3s linear infinite !important;
-        }
-        .breadcrumb,
-        .base-header_bellPosition__e5rVd,
-        .w-100.is-flex.is-justify-content-center.pb-3,
-        a[href*="trum-ghep-chu"],
-        .game-title_roomBar__KySQA,
-        [class*="game-title_roomBar"] {
-            opacity: 0 !important;
-            pointer-events: none !important;
-            height: 0px !important;
-            margin: 0px !important;
-            padding: 0px !important;
-            cursor: default !important;
-            overflow: hidden !important;
-        }
-        .multiple-mode-lobby_rankedBtn__EG4j8,
-        .columns.is-multiline a.column .button {
-            background: transparent !important;
-            border: 1px solid #ff0000 !important;
-            outline: none !important;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.2) !important;
-            transition: all 0.2s ease-in-out !important;
-            color: #ff0000 !important;
-        }
-        .multiple-mode-lobby_rankedBtn__EG4j8:hover,
-        .columns.is-multiline a.column .button:hover {
-            transform: translateY(-4px) scale(1.02) !important;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5) !important;
-            background: rgba(255, 0, 0, 0.05) !important;
-        }
-        .multiple-mode-lobby_rankedBtn__EG4j8 span,
-        .multiple-mode-lobby_rankedBtn__EG4j8 strong,
-        .columns.is-multiline a.column .button h2,
-        .columns.is-multiline a.column .button .is-size-6 {
-            color: #ff0000 !important;
-            text-shadow: 0 0 8px rgba(255, 0, 0, 0.8) !important;
-            -webkit-text-fill-color: initial !important;
-        }
-        .multiple-mode-lobby_rankedBtn__EG4j8 svg,
-        .columns.is-multiline a.column .button svg {
-            color: #ff0000 !important;
-            stroke: #ff0000 !important;
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.8)) !important;
-        }
-        .tag.is-dark {
-            background-color: rgba(255, 0, 0, 0.2) !important;
-            border: 1px solid #ff0000 !important;
-            color: #ff0000 !important;
-        }
-        .field.has-addons .input,
-        .field.has-addons .button {
-            border: none !important;
-            outline: none !important;
-            box-shadow: none !important;
-            background: linear-gradient(90deg, #000, #ff0000, #000) !important;
-            background-size: 200% auto !important;
-            animation: head-gradient 3s linear infinite !important;
-            color: white !important;
-        }
-        .input:focus, .input:active, .button:focus, .button:active {
-            outline: none !important;
-            border: none !important;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.4) !important;
-        }
-        .glass-btn {
-            backdrop-filter: blur(10px) !important;
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            color: white !important;
-            font-family: monospace !important;
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 13px;
-            min-width: 190px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-        }
-        .glass-btn:hover {
-            transform: scale(1.05) translateY(-2px) !important;
-        }
-        .nut-nap { border-color: #00d2ff !important; color: #00d2ff !important; }
-        .nut-nap:hover { box-shadow: 0 0 15px #00d2ff !important; }
-        .nut-tim { border-color: #9d50bb !important; color: #9d50bb !important; }
-        .nut-tim:hover { box-shadow: 0 0 15px #9d50bb !important; }
-        .nut-speed { border-color: #f7971e !important; color: #f7971e !important; }
-        .nut-speed:hover { box-shadow: 0 0 15px #f7971e !important; }
-        .nut-turbo { border-color: #ff0000 !important; color: #ff0000 !important; }
-        .nut-turbo:hover { box-shadow: 0 0 15px #ff0000 !important; }
-        .nut-dang-dung {
-            background: rgba(255, 0, 0, 0.2) !important;
-            animation: rung 0.4s infinite !important;
-        }
-        @keyframes rung {
-            0% { transform: translate(1px, 1px); }
-            50% { transform: translate(-1px, -1px); }
-            100% { transform: translate(1px, 1px); }
-        }
-        .noitu-centered-title {
-            background: linear-gradient(90deg, #000, #ff0000, #000);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: head-gradient 3s linear infinite;
-            font-weight: 800; font-size: 3.5rem; text-align: center;
-        }
-        @keyframes head-gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .glowing-heart {
-            display: inline-block; color: #ff0000;
-            animation: heart-breathe 1.2s ease-in-out infinite;
-        }
-        @keyframes heart-breathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ff0000); }
-            50% { transform: scale(1.3); filter: drop-shadow(0 0 15px #ff0000); }
-        }
-        #noitu-ui-box {
-            position:fixed;
-            bottom:20px;
-            left:20px;
-            z-index:999999;
-            display:flex;
-            flex-direction:row;
-            align-items:center;
-            gap:12px;
-        }
-        #noitu-ui-box .master-btn {
-            width: 68px;
-            height: 68px;
-            border-radius: 50% !important;
-            background: rgba(255,255,255,0.08) !important;
-            border: 3px solid #ff0000 !important;
-            color: #ff0000 !important;
-            font-size: 32px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5) !important;
-            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
-            cursor: pointer !important;
-        }
-        #noitu-ui-box .master-btn:hover {
-            transform: scale(1.1) !important;
-            box-shadow: 0 0 30px rgba(255,0,0,0.7) !important;
-        }
-        #noitu-ui-box .sub-menu {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            opacity: 0;
-            transform: scale(0.85) translateX(-40px);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-            pointer-events: none;
-        }
-        #noitu-ui-box.expanded .sub-menu {
-            opacity: 1;
-            transform: scale(1) translateX(0);
-            pointer-events: auto;
-        }
-        #noitu-ui-box .sub-menu .glass-btn {
-            opacity: 0;
-            transform: scale(0.3) translateX(-50px) !important;
-            transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
-        }
-        #noitu-ui-box.expanded .sub-menu .glass-btn {
-            opacity: 1 !important;
-            transform: scale(1) translateX(0) !important;
-        }
-        .tanthuan-wave {
-            display: inline-block; color: #00d2ff; font-weight: bold;
-            text-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
-            animation: sea-wave 2.8s ease-in-out infinite;
-        }
-        @keyframes sea-wave {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-3px) rotate(3deg); }
-            50% { transform: translateY(2px) rotate(-2deg); }
-            75% { transform: translateY(-2px) rotate(2deg); }
-        }
-        /* ==================== SHOP MODAL THEME ==================== */
-        .modal-card {
-            background: rgba(10, 10, 10, 0.95) !important;
-            border: 2px solid #ff0000 !important;
-            box-shadow: 0 0 35px rgba(255, 0, 0, 0.5) !important;
-            backdrop-filter: blur(20px) !important;
-        }
-        .modal-card-head {
-            background: rgba(15, 15, 15, 0.95) !important;
-            border-bottom: 1px solid #ff0000 !important;
-        }
-        .tabs.is-toggle li.is-active a {
-            background-color: rgba(255, 0, 0, 0.25) !important;
-            border-color: #ff0000 !important;
-            color: #ff0000 !important;
-            text-shadow: 0 0 8px #ff0000 !important;
-        }
-        .ShopModal_itemGrid__wr8Zh {
-            gap: 12px !important;
-        }
-        .ShopModal_itemCard__F6Eao {
-            background: rgba(255,255,255,0.04) !important;
-            border: 1px solid rgba(255,0,0,0.3) !important;
-            border-radius: 14px !important;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 0 15px rgba(255,0,0,0.15) !important;
-        }
-        .ShopModal_itemCard__F6Eao:hover {
-            transform: translateY(-6px) scale(1.03) !important;
-            border-color: #ff0000 !important;
-            box-shadow: 0 0 30px rgba(255,0,0,0.6) !important;
-        }
-        .ShopModal_itemName__zt5_U {
-            color: #ff0000 !important;
-            text-shadow: 0 0 10px rgba(255,0,0,0.7) !important;
-        }
-        .ShopModal_itemDesc__31PCU {
-            color: #bbbbbb !important;
-        }
-        .ShopModal_itemPrice__ce3r_ {
-            color: #fbbf24 !important;
-            text-shadow: 0 0 8px rgba(251,191,36,0.6) !important;
-        }
-        .ShopModal_itemAction__G7ERr .button {
-            background: rgba(255,255,255,0.06) !important;
-            border: 1px solid #ff0000 !important;
-            color: #ff0000 !important;
-            transition: all 0.25s ease !important;
-        }
-        .ShopModal_itemAction__G7ERr .button:hover {
-            background: rgba(255,0,0,0.15) !important;
-            box-shadow: 0 0 20px #ff0000 !important;
-            transform: translateY(-2px) !important;
-        }
-        .tag.is-danger.is-light {
-            background-color: rgba(255,0,0,0.2) !important;
-            color: #ff0000 !important;
-            border: 1px solid #ff0000 !important;
-        }
-        .UserAvatar_wrapper__AZyFE {
-            box-shadow: 0 0 20px rgba(255,0,0,0.4) !important;
-            transition: all 0.3s ease !important;
-        }
-        .modal-close {
-            color: #ff0000 !important;
-            filter: drop-shadow(0 0 8px #ff0000) !important;
-        }
-        .ShopModal_itemCard__F6Eao {
-            background: #000000 !important;
-        }
-        .modal-card-body {
-            background: #000000 !important;
-        }
-        .modal-background {
-            background: transparent !important;
-        }
-    `;
-    document.documentElement.appendChild(style);
-    let tuDienTong = [];
-    let tuDaDung = new Set();
-    let thongKeAmDau = {};
-    let dangChayTuDong = false;
-    let vongLapTuDong = null;
-    let tocDoCustom = 500;
-    let isExpanded = false;
-    let tuDienDaTai = false;
-
-    let tuHienTaiTrenSan = "";
-    let coTheHienThiGoiY = false;
-    let timerDelayGoiY = null;
-
-    function capNhatGiaoDienGoc() {
-        const tieuDe = document.querySelector('.title.is-1') || document.querySelector('h1');
-        if (tieuDe && !tieuDe.classList.contains('noitu-centered-title')) {
-            tieuDe.innerHTML = 'NoiTu++';
-            tieuDe.classList.add('noitu-centered-title');
-        }
-        const dongPhu = document.querySelector('p.has-text-centered.is-size-5');
-        if (dongPhu && !dongPhu.innerHTML.includes('tanthuan-wave')) {
-            dongPhu.innerHTML = `Made with <span class="glowing-heart">💗</span> - <span class="tanthuan-wave">TanThuan</span>`;
-        }
+        text-shadow: 0 0 5px #ff0000 !important;
     }
-    function ganGiaTriInput(oNhap, giaTri) {
-        if (!oNhap) return;
-        const giaTriCu = oNhap.value;
-        oNhap.value = giaTri;
-        const trinhTheoDoi = oNhap._valueTracker;
-        if (trinhTheoDoi) trinhTheoDoi.setValue(giaTriCu);
-        oNhap.dispatchEvent(new Event('input', { bubbles: true }));
+    .user-modal_tabsContainer__IkVAx a {
+        color: #888 !important;
+        border-bottom-color: rgba(255, 255, 255, 0.1) !important;
     }
-
-    function timTuOutplay(danhSach) {
-        if (!danhSach || danhSach.length === 0) return null;
-        return danhSach.sort((a, b) => {
-            const amCuoiA = a.toLowerCase().split(/\s+/).pop();
-            const amCuoiB = b.toLowerCase().split(/\s+/).pop();
-            const diemA = thongKeAmDau[amCuoiA] || 0;
-            const diemB = thongKeAmDau[amCuoiB] || 0;
-            return diemA - diemB;
-        })[0];
+    .user-modal_tabsContainer__IkVAx a:hover {
+        color: #ff0000 !important;
     }
+    .user-modal_coinSection__LCNtB {
+        background: rgba(251, 191, 36, 0.1) !important;
+        border: 1px solid rgba(251, 191, 36, 0.4) !important;
+        padding: 5px 10px !important;
+        border-radius: 8px !important;
+    }
+    .user-modal_giftcodeBtn__XZZr5, .user-modal_actions__4Vohl .button {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid #ff0000 !important;
+        color: #ff0000 !important;
+        transition: all 0.2s ease !important;
+    }
+    .user-modal_giftcodeBtn__XZZr5:hover, .user-modal_actions__4Vohl .button:hover {
+        background: rgba(255, 0, 0, 0.1) !important;
+        box-shadow: 0 0 12px rgba(255, 0, 0, 0.4) !important;
+        transform: translateY(-2px) !important;
+    }
+    .multiple-mode-lobby_roomBox__r6fVt,
+    .multiple-mode-lobby_searchingBox__Z0JT6 {
+     background: transparent !important;
+     border: 2px solid #ff0000 !important;
+     box-shadow: none !important;
+    }
+   .multiple-mode-lobby_roomBox__r6fVt *,
+   .multiple-mode-lobby_searchingBox__Z0JT6 * {
+    color: #ff0000 !important;
+    }
+    .GiftSection_section__z92Gg {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px dashed rgba(255, 0, 0, 0.3) !important;
+        border-radius: 10px !important;
+    }
+    progress.progress::-webkit-progress-value {
+        background: linear-gradient(90deg, #000, #ff0000, #000) !important;
+        background-size: 200% auto !important;
+        animation: head-gradient 3s linear infinite !important;
+    }
+    .breadcrumb,
+    .base-header_bellPosition__e5rVd,
+    .w-100.is-flex.is-justify-content-center.pb-3,
+    a[href*="trum-ghep-chu"],
+    .game-title_roomBar__KySQA,
+    [class*="game-title_roomBar"] {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        cursor: default !important;
+        overflow: hidden !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8,
+    .columns.is-multiline a.column .button {
+        background: transparent !important;
+        border: 1px solid #ff0000 !important;
+        outline: none !important;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.2) !important;
+        transition: all 0.2s ease-in-out !important;
+        color: #ff0000 !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8:hover,
+    .columns.is-multiline a.column .button:hover {
+        transform: translateY(-4px) scale(1.02) !important;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5) !important;
+        background: rgba(255, 0, 0, 0.05) !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8 span,
+    .multiple-mode-lobby_rankedBtn__EG4j8 strong,
+    .columns.is-multiline a.column .button h2,
+    .columns.is-multiline a.column .button .is-size-6 {
+        color: #ff0000 !important;
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.8) !important;
+        -webkit-text-fill-color: initial !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8 svg,
+    .columns.is-multiline a.column .button svg {
+        color: #ff0000 !important;
+        stroke: #ff0000 !important;
+        filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.8)) !important;
+    }
+    .tag.is-dark {
+        background-color: rgba(255, 0, 0, 0.2) !important;
+        border: 1px solid #ff0000 !important;
+        color: #ff0000 !important;
+    }
+    .field.has-addons .input,
+    .field.has-addons .button {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background: linear-gradient(90deg, #000, #ff0000, #000) !important;
+        background-size: 200% auto !important;
+        animation: head-gradient 3s linear infinite !important;
+        color: white !important;
+    }
+    .input:focus, .input:active, .button:focus, .button:active {
+        outline: none !important;
+        border: none !important;
+        box-shadow: 0 0 12px rgba(255, 0, 0, 0.4) !important;
+    }
+    .glass-btn {
+        backdrop-filter: blur(10px) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        font-family: monospace !important;
+        text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 13px;
+        min-width: 190px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    .glass-btn:hover {
+        transform: scale(1.05) translateY(-2px) !important;
+    }
+    .nut-nap { border-color: #00d2ff !important; color: #00d2ff !important; }
+    .nut-nap:hover { box-shadow: 0 0 15px #00d2ff !important; }
+    .nut-tim { border-color: #9d50bb !important; color: #9d50bb !important; }
+    .nut-tim:hover { box-shadow: 0 0 15px #9d50bb !important; }
+    .nut-speed { border-color: #f7971e !important; color: #f7971e !important; }
+    .nut-speed:hover { box-shadow: 0 0 15px #f7971e !important; }
+    .nut-turbo { border-color: #ff0000 !important; color: #ff0000 !important; }
+    .nut-turbo:hover { box-shadow: 0 0 15px #ff0000 !important; }
+    .nut-dang-dung {
+        background: rgba(255, 0, 0, 0.2) !important;
+        animation: rung 0.4s infinite !important;
+    }
+    @keyframes rung {
+        0% { transform: translate(1px, 1px); }
+        50% { transform: translate(-1px, -1px); }
+        100% { transform: translate(1px, 1px); }
+    }
+    .noitu-centered-title {
+        background: linear-gradient(90deg, #000, #ff0000, #000);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: head-gradient 3s linear infinite;
+        font-weight: 800; font-size: 3.5rem; text-align: center;
+    }
+    @keyframes head-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .glowing-heart {
+        display: inline-block; color: #ff0000;
+        animation: heart-breathe 1.2s ease-in-out infinite;
+    }
+    @keyframes heart-breathe {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ff0000); }
+        50% { transform: scale(1.3); filter: drop-shadow(0 0 15px #ff0000); }
+    }
+    #noitu-ui-box {
+        position:fixed;
+        bottom:20px;
+        left:20px;
+        z-index:999999;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        gap:12px;
+    }
+    #noitu-ui-box .master-btn {
+        width: 68px;
+        height: 68px;
+        border-radius: 50% !important;
+        background: rgba(255,255,255,0.08) !important;
+        border: 3px solid #ff0000 !important;
+        color: #ff0000 !important;
+        font-size: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5) !important;
+        transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
+        cursor: pointer !important;
+    }
+    #noitu-ui-box .master-btn:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 0 30px rgba(255,0,0,0.7) !important;
+    }
+    #noitu-ui-box .sub-menu {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        opacity: 0;
+        transform: scale(0.85) translateX(-40px);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        pointer-events: none;
+    }
+    #noitu-ui-box.expanded .sub-menu {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+        pointer-events: auto;
+    }
+    #noitu-ui-box .sub-menu .glass-btn {
+        opacity: 0;
+        transform: scale(0.3) translateX(-50px) !important;
+        transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    }
+    #noitu-ui-box.expanded .sub-menu .glass-btn {
+        opacity: 1 !important;
+        transform: scale(1) translateX(0) !important;
+    }
+    .tanthuan-wave {
+        display: inline-block; color: #00d2ff; font-weight: bold;
+        text-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
+        animation: sea-wave 2.8s ease-in-out infinite;
+    }
+    @keyframes sea-wave {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-3px) rotate(3deg); }
+        50% { transform: translateY(2px) rotate(-2deg); }
+        75% { transform: translateY(-2px) rotate(2deg); }
+    }
+    .modal-card {
+        background: rgba(10, 10, 10, 0.95) !important;
+        border: 2px solid #ff0000 !important;
+        box-shadow: 0 0 35px rgba(255, 0, 0, 0.5) !important;
+        backdrop-filter: blur(20px) !important;
+    }
+    .modal-card-head {
+        background: rgba(15, 15, 15, 0.95) !important;
+        border-bottom: 1px solid #ff0000 !important;
+    }
+    .tabs.is-toggle li.is-active a {
+        background-color: rgba(255, 0, 0, 0.25) !important;
+        border-color: #ff0000 !important;
+        color: #ff0000 !important;
+        text-shadow: 0 0 8px #ff0000 !important;
+    }
+    .ShopModal_itemGrid__wr8Zh {
+        gap: 12px !important;
+    }
+    .ShopModal_itemCard__F6Eao {
+        background: rgba(255,255,255,0.04) !important;
+        border: 1px solid rgba(255,0,0,0.3) !important;
+        border-radius: 14px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 0 15px rgba(255,0,0,0.15) !important;
+    }
+    .ShopModal_itemCard__F6Eao:hover {
+        transform: translateY(-6px) scale(1.03) !important;
+        border-color: #ff0000 !important;
+        box-shadow: 0 0 30px rgba(255,0,0,0.6) !important;
+    }
+    .ShopModal_itemName__zt5_U {
+        color: #ff0000 !important;
+        text-shadow: 0 0 10px rgba(255,0,0,0.7) !important;
+    }
+    .ShopModal_itemDesc__31PCU {
+        color: #bbbbbb !important;
+    }
+    .ShopModal_itemPrice__ce3r_ {
+        color: #fbbf24 !important;
+        text-shadow: 0 0 8px rgba(251,191,36,0.6) !important;
+    }
+    .ShopModal_itemAction__G7ERr .button {
+        background: rgba(255,255,255,0.06) !important;
+        border: 1px solid #ff0000 !important;
+        color: #ff0000 !important;
+        transition: all 0.25s ease !important;
+    }
+    .ShopModal_itemAction__G7ERr .button:hover {
+        background: rgba(255,0,0,0.15) !important;
+        box-shadow: 0 0 20px #ff0000 !important;
+        transform: translateY(-2px) !important;
+    }
+    .tag.is-danger.is-light {
+        background-color: rgba(255,0,0,0.2) !important;
+        color: #ff0000 !important;
+        border: 1px solid #ff0000 !important;
+    }
+    .UserAvatar_wrapper__AZyFE {
+        box-shadow: 0 0 20px rgba(255,0,0,0.4) !important;
+        transition: all 0.3s ease !important;
+    }
+    .modal-close {
+        color: #ff0000 !important;
+        filter: drop-shadow(0 0 8px #ff0000) !important;
+    }
+    .ShopModal_itemCard__F6Eao {
+        background: #000000 !important;
+    }
+    .modal-card-body {
+        background: #000000 !important;
+    }
+    .modal-background {
+        background: transparent !important;
+    }
+`;
+document.documentElement.appendChild(style);
 
-    function logicGuiTu(laTuDong = true) {
-        if (laTuDong) {
-            const nutChoiLai = document.querySelector('button[class*="game-result-modal_playAgainBtn"]');
-            if (nutChoiLai) { tuDaDung.clear(); nutChoiLai.click(); return; }
-            const nutNgauNhien = document.querySelector('.ranked-lobby_rankCardRandom__Br_il');
-            if (nutNgauNhien) { tuDaDung.clear(); nutNgauNhien.click(); return; }
-        }
-        const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
-        if (!thanhPhanChu) return;
-        const amCuoi = thanhPhanChu.textContent.trim().toLowerCase().split(/\s+/).pop();
-        const danhSachHopLe = tuDienTong.filter(t => !tuDaDung.has(t) && t.toLowerCase().startsWith(amCuoi + " "));
-        const tuTiepTheo = timTuOutplay(danhSachHopLe);
+let tuDienTong = [];
+let tuDaDung = new Set();
+let thongKeAmDau = {};
+let dangChayTuDong = false;
+let vongLapTuDong = null;
+let tocDoCustom = 500;
+let isExpanded = false;
+let tuDienDaTai = false;
+let tuHienTaiTrenSan = "";
+let coTheHienThiGoiY = false;
+let timerDelayGoiY = null;
 
-        if (tuTiepTheo) {
-            const oNhap = document.querySelector('input.input');
-            const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
-            if (oNhap) {
-                ganGiaTriInput(oNhap, tuTiepTheo);
-                tuDaDung.add(tuTiepTheo);
-                if (laTuDong) {
-                    setTimeout(() => { if (nutGui) nutGui.click(); }, 100);
-                }
+function capNhatGiaoDienGoc() {
+    const tieuDe = document.querySelector('.title.is-1') || document.querySelector('h1');
+    if (tieuDe && !tieuDe.classList.contains('noitu-centered-title')) {
+        tieuDe.innerHTML = 'NoiTu++';
+        tieuDe.classList.add('noitu-centered-title');
+    }
+    const dongPhu = document.querySelector('p.has-text-centered.is-size-5');
+    if (dongPhu && !dongPhu.innerHTML.includes('tanthuan-wave')) {
+        dongPhu.innerHTML = `Made with <span class="glowing-heart">💗</span> - <span class="tanthuan-wave">TanThuan</span>`;
+    }
+}
+function ganGiaTriInput(oNhap, giaTri) {
+    if (!oNhap) return;
+    const giaTriCu = oNhap.value;
+    oNhap.value = giaTri;
+    const trinhTheoDoi = oNhap._valueTracker;
+    if (trinhTheoDoi) trinhTheoDoi.setValue(giaTriCu);
+    oNhap.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function timTuOutplay(danhSach) {
+    if (!danhSach || danhSach.length === 0) return null;
+    return danhSach.sort((a, b) => {
+        const amCuoiA = a.toLowerCase().split(/\s+/).pop();
+        const amCuoiB = b.toLowerCase().split(/\s+/).pop();
+        const diemA = thongKeAmDau[amCuoiA] || 0;
+        const diemB = thongKeAmDau[amCuoiB] || 0;
+        return diemA - diemB;
+    })[0];
+}
+
+function logicGuiTu(laTuDong = true) {
+    if (laTuDong) {
+        const nutChoiLai = document.querySelector('button[class*="game-result-modal_playAgainBtn"]');
+        if (nutChoiLai) { tuDaDung.clear(); nutChoiLai.click(); return; }
+        const nutNgauNhien = document.querySelector('.ranked-lobby_rankCardRandom__Br_il');
+        if (nutNgauNhien) { tuDaDung.clear(); nutNgauNhien.click(); return; }
+    }
+    const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
+    if (!thanhPhanChu) return;
+    const amCuoi = thanhPhanChu.textContent.trim().toLowerCase().split(/\s+/).pop();
+    const danhSachHopLe = tuDienTong.filter(t => !tuDaDung.has(t) && t.toLowerCase().startsWith(amCuoi + " "));
+    const tuTiepTheo = timTuOutplay(danhSachHopLe);
+
+    if (tuTiepTheo) {
+        const oNhap = document.querySelector('input.input');
+        const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
+        if (oNhap) {
+            ganGiaTriInput(oNhap, tuTiepTheo);
+            tuDaDung.add(tuTiepTheo);
+            if (laTuDong) {
+                setTimeout(() => { if (nutGui) nutGui.click(); }, 100);
             }
-        } else if (laTuDong) {
-            const nutBoQua = document.querySelector('button.button.is-text.is-medium');
-            if (nutBoQua) nutBoQua.click();
         }
+    } else if (laTuDong) {
+        const nutBoQua = document.querySelector('button.button.is-text.is-medium');
+        if (nutBoQua) nutBoQua.click();
     }
+}
 
-    const hopDieuKhien = document.createElement('div');
-    hopDieuKhien.id = 'noitu-ui-box';
-    function taoNut(vanBan, lopCss, hanhDong) {
-        const nut = document.createElement('button');
-        nut.innerHTML = vanBan;
-        nut.className = `glass-btn ${lopCss}`;
-        nut.onclick = hanhDong;
-        return nut;
-    }
+const hopDieuKhien = document.createElement('div');
+hopDieuKhien.id = 'noitu-ui-box';
+function taoNut(vanBan, lopCss, hanhDong) {
+    const nut = document.createElement('button');
+    nut.innerHTML = vanBan;
+    nut.className = `glass-btn ${lopCss}`;
+    nut.onclick = hanhDong;
+    return nut;
+}
 const nutNapTuDien = taoNut('Load', 'nut-nap', () => {
-        const dauVao = document.createElement('input');
-        dauVao.type = 'file';
-        dauVao.accept = '.txt';
-        dauVao.style.display = 'none';
-        document.body.appendChild(dauVao);
-        dauVao.click();
+    const dauVao = document.createElement('input');
+    dauVao.type = 'file';
+    dauVao.accept = '.txt';
+    dauVao.style.display = 'none';
+    document.body.appendChild(dauVao);
+    dauVao.click();
 
-        dauVao.onchange = e => {
-            const tep = e.target.files[0];
-            const trinhDoc = new FileReader();
-            trinhDoc.onload = ev => {
-                const lines = ev.target.result.split(/\r?\n/);
-                tuDienTong = lines.map(d => d.trim()).filter(d => d.split(/\s+/).length === 2);
-                thongKeAmDau = {};
-                tuDienTong.forEach(tu => {
-                    const chuDau = tu.toLowerCase().split(/\s+/)[0];
-                    thongKeAmDau[chuDau] = (thongKeAmDau[chuDau] || 0) + 1;
-                });
-
-                tuDaDung.clear();
-                tuDienDaTai = true;
-                nutNapTuDien.innerHTML = '✔';
-                suggestBox.style.display = 'block';
-                capNhatSuggestBox();
-            };
-            trinhDoc.readAsText(tep);
-            document.body.removeChild(dauVao);
+    dauVao.onchange = e => {
+        const tep = e.target.files[0];
+        const trinhDoc = new FileReader();
+        trinhDoc.onload = ev => {
+            const lines = ev.target.result.split(/\r?\n/);
+            tuDienTong = lines.map(d => d.trim()).filter(d => d.split(/\s+/).length === 2);
+            thongKeAmDau = {};
+            tuDienTong.forEach(tu => {
+                const chuDau = tu.toLowerCase().split(/\s+/)[0];
+                thongKeAmDau[chuDau] = (thongKeAmDau[chuDau] || 0) + 1;
+            });
+            tuDaDung.clear();
+            tuDienDaTai = true;
+            nutNapTuDien.innerHTML = '✔';
+            suggestBox.style.display = 'block';
+            capNhatSuggestBox();
         };
-    });
-    const nutChinhSpeed = taoNut(`Speed: ${tocDoCustom}ms`, 'nut-speed', () => {
-        let inputSpeed = prompt("Nhập tốc độ (ms):", tocDoCustom);
-        if (inputSpeed !== null && !isNaN(inputSpeed) && inputSpeed > 0) {
-            tocDoCustom = parseInt(inputSpeed);
-            nutChinhSpeed.innerHTML = `Speed: ${tocDoCustom}ms`;
-            if (dangChayTuDong) kichHoatTuDong();
-        }
-    });
-    const nutAutoTurbo = taoNut('Auto', 'nut-turbo', () => kichHoatTuDong());
-    const subMenu = document.createElement('div');
-    subMenu.className = 'sub-menu';
-    subMenu.appendChild(nutNapTuDien);
-    subMenu.appendChild(nutChinhSpeed);
-    subMenu.appendChild(nutAutoTurbo);
-    const masterBtn = document.createElement('button');
-    masterBtn.className = 'master-btn';
-    masterBtn.innerHTML = '+';
-    masterBtn.onclick = () => {
-        isExpanded = !isExpanded;
-        hopDieuKhien.classList.toggle('expanded', isExpanded);
-        masterBtn.innerHTML = isExpanded ? '×' : '+';
+        trinhDoc.readAsText(tep);
+        document.body.removeChild(dauVao);
     };
-    hopDieuKhien.appendChild(masterBtn);
-    hopDieuKhien.appendChild(subMenu);
-    function kichHoatTuDong() {
-        if (dangChayTuDong) {
-            dangChayTuDong = false; clearInterval(vongLapTuDong);
-            capNhatTrangThaiNut(); return;
-        }
-        clearInterval(vongLapTuDong);
-        dangChayTuDong = true;
-        capNhatTrangThaiNut();
-        vongLapTuDong = setInterval(() => logicGuiTu(true), tocDoCustom);
+});
+const nutChinhSpeed = taoNut(`Speed: ${tocDoCustom}ms`, 'nut-speed', () => {
+    let inputSpeed = prompt("Nhập tốc độ (ms):", tocDoCustom);
+    if (inputSpeed !== null && !isNaN(inputSpeed) && inputSpeed > 0) {
+        tocDoCustom = parseInt(inputSpeed);
+        nutChinhSpeed.innerHTML = `Speed: ${tocDoCustom}ms`;
+        if (dangChayTuDong) kichHoatTuDong();
     }
-    function capNhatTrangThaiNut() {
-        if (!dangChayTuDong) {
-            nutAutoTurbo.classList.remove('nut-dang-dung');
-            nutAutoTurbo.innerHTML = 'Auto bot';
-        } else {
-            nutAutoTurbo.classList.add('nut-dang-dung');
-            nutAutoTurbo.innerHTML = 'stop';
-        }
+});
+const nutAutoTurbo = taoNut('Auto', 'nut-turbo', () => kichHoatTuDong());
+const subMenu = document.createElement('div');
+subMenu.className = 'sub-menu';
+subMenu.appendChild(nutNapTuDien);
+subMenu.appendChild(nutChinhSpeed);
+subMenu.appendChild(nutAutoTurbo);
+const masterBtn = document.createElement('button');
+masterBtn.className = 'master-btn';
+masterBtn.innerHTML = '+';
+masterBtn.onclick = () => {
+    isExpanded = !isExpanded;
+    hopDieuKhien.classList.toggle('expanded', isExpanded);
+    masterBtn.innerHTML = isExpanded ? '×' : '+';
+};
+hopDieuKhien.appendChild(masterBtn);
+hopDieuKhien.appendChild(subMenu);
+function kichHoatTuDong() {
+    if (dangChayTuDong) {
+        dangChayTuDong = false; clearInterval(vongLapTuDong);
+        capNhatTrangThaiNut(); return;
     }
+    clearInterval(vongLapTuDong);
+    dangChayTuDong = true;
+    capNhatTrangThaiNut();
+    vongLapTuDong = setInterval(() => logicGuiTu(true), tocDoCustom);
+}
+function capNhatTrangThaiNut() {
+    if (!dangChayTuDong) {
+        nutAutoTurbo.classList.remove('nut-dang-dung');
+        nutAutoTurbo.innerHTML = 'Auto bot';
+    } else {
+        nutAutoTurbo.classList.add('nut-dang-dung');
+        nutAutoTurbo.innerHTML = 'stop';
+    }
+}
 
-    window.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
-            if (nutGui) {
-                nutGui.click();
-            }
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
+        if (nutGui) {
+            nutGui.click();
         }
+    }
+});
+
+const canvas = document.createElement('canvas');
+canvas.id = 'noitu-particle-canvas';
+canvas.style.position = 'fixed';
+canvas.style.top = '0';
+canvas.style.left = '0';
+canvas.style.width = '100vw';
+canvas.style.height = '100vh';
+canvas.style.zIndex = '0';
+canvas.style.pointerEvents = 'none';
+const ctx = canvas.getContext('2d');
+let width, height;
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+const particles = [];
+const numParticles = 80;
+const maxDistance = 150;
+for (let i = 0; i < numParticles; i++) {
+    particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        radius: Math.random() * 2 + 1.5
     });
-
-    const canvas = document.createElement('canvas');
-    canvas.id = 'noitu-particle-canvas';
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100vw';
-    canvas.style.height = '100vh';
-    canvas.style.zIndex = '0';
-    canvas.style.pointerEvents = 'none';
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    const particles = [];
-    const numParticles = 80;
-    const maxDistance = 150;
+}
+function animateParticles() {
+    ctx.clearRect(0, 0, width, height);
     for (let i = 0; i < numParticles; i++) {
-        particles.push({
-            x: Math.random() * 1920,
-            y: Math.random() * 1080,
-            vx: (Math.random() - 0.5) * 1.5,
-            vy: (Math.random() - 0.5) * 1.5,
-            radius: Math.random() * 2 + 1.5
-        });
+        let p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fill();
     }
-    function animateParticles() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = 0; i < numParticles; i++) {
-            let p = particles[i];
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > width) p.vx *= -1;
-            if (p.y < 0 || p.y > height) p.vy *= -1;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-            ctx.fill();
-        }
-        for (let i = 0; i < numParticles; i++) {
-            for (let j = i + 1; j < numParticles; j++) {
-                let p1 = particles[i]; let p2 = particles[j];
-                let dx = p1.x - p2.x; let dy = p1.y - p2.y;
-                let dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < maxDistance) {
-                    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
-                    let alpha = 1 - (dist / maxDistance);
-                    ctx.strokeStyle = `rgba(255, 0, 0, ${alpha})`;
-                    ctx.lineWidth = 1; ctx.stroke();
-                }
+    for (let i = 0; i < numParticles; i++) {
+        for (let j = i + 1; j < numParticles; j++) {
+            let p1 = particles[i]; let p2 = particles[j];
+            let dx = p1.x - p2.x; let dy = p1.y - p2.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < maxDistance) {
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                let alpha = 1 - (dist / maxDistance);
+                ctx.strokeStyle = `rgba(255, 0, 0, ${alpha})`;
+                ctx.lineWidth = 1; ctx.stroke();
             }
         }
-        requestAnimationFrame(animateParticles);
     }
-    setInterval(() => {
-        capNhatGiaoDienGoc();
-        if (!document.getElementById('noitu-ui-box') && document.body) {
-            document.body.appendChild(hopDieuKhien);
-        }
-        if (document.body && !document.getElementById('noitu-particle-canvas')) {
-            document.body.appendChild(canvas);
-            resize();
-            animateParticles();
-        }
-    }, 200);
+    requestAnimationFrame(animateParticles);
+}
+setInterval(() => {
+    capNhatGiaoDienGoc();
+    if (!document.getElementById('noitu-ui-box') && document.body) {
+        document.body.appendChild(hopDieuKhien);
+    }
+    if (document.body && !document.getElementById('noitu-particle-canvas')) {
+        document.body.appendChild(canvas);
+        resize();
+        animateParticles();
+    }
+}, 200);
 
 const suggestBox = document.createElement('div');
 suggestBox.id = 'noitu-suggest-box';
 document.body.appendChild(suggestBox);
 const suggestStyle = document.createElement('style');
 suggestStyle.innerHTML = `
-#noitu-suggest-box {
-    position: fixed;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    width: 220px;
-    max-height: 60vh;
-    overflow-y: auto;
-    z-index: 9999999 !important;
-    background: transparent !important;
-    display: none;
-    padding: 10px;
-}
-.noitu-word-item {
-    padding: 6px 8px;
-    margin-bottom: 4px;
-    border: 1px solid #ff0000 !important;
-    color: #ff0000 !important;
-    background: transparent !important;
-    cursor: pointer;
-    transition: 0.15s;
-    display: flex;
-    justify-content: space-between;
-}
-.noitu-word-item:hover {
-    background: transparent !important;
-    transform: translateX(4px);
-}
-.noitu-word-item span.difficulty {
-    font-size: 10px;
-    opacity: 0.7;
-}
-.noitu-status-msg {
-    padding: 6px 8px;
-    margin-bottom: 4px;
-    color: #ff0000 !important;
-    background: transparent !important;
-    border: none !important;
-    text-align: center;
-}
+    #noitu-suggest-box {
+        position: fixed;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        width: 220px;
+        max-height: 60vh;
+        overflow-y: auto;
+        z-index: 9999999 !important;
+        background: transparent !important;
+        display: none;
+        padding: 10px;
+    }
+    .noitu-word-item {
+        padding: 6px 8px;
+        margin-bottom: 4px;
+        border: 1px solid #ff0000 !important;
+        color: #ff0000 !important;
+        background: transparent !important;
+        cursor: pointer;
+        transition: 0.15s;
+        display: flex;
+        justify-content: space-between;
+    }
+    .noitu-word-item:hover {
+        background: transparent !important;
+        transform: translateX(4px);
+    }
+    .noitu-word-item span.difficulty {
+        font-size: 10px;
+        opacity: 0.7;
+    }
+    .noitu-status-msg {
+        padding: 6px 8px;
+        margin-bottom: 4px;
+        color: #ff0000 !important;
+        background: transparent !important;
+        border: none !important;
+        text-align: center;
+    }
 `;
 document.documentElement.appendChild(suggestStyle);
 
@@ -695,7 +692,6 @@ function capNhatSuggestBox() {
         tuHienTaiTrenSan = wordOnScreen;
         coTheHienThiGoiY = false;
         clearTimeout(timerDelayGoiY);
-
         if (wordOnScreen !== "") {
             timerDelayGoiY = setTimeout(() => {
                 coTheHienThiGoiY = true;
@@ -704,7 +700,6 @@ function capNhatSuggestBox() {
     }
 
     suggestBox.innerHTML = '';
-
     const amCuoi = wordOnScreen.toLowerCase().split(/\s+/).pop();
     let danhSach = tuDienTong.filter(t =>
         !tuDaDung.has(t) &&
@@ -726,12 +721,9 @@ function capNhatSuggestBox() {
         danhSach.slice(0, 30).forEach(word => {
             const div = document.createElement('div');
             div.className = 'noitu-word-item';
-
             const amCuoiCuaTu = word.toLowerCase().split(/\s+/).pop();
             const soTuNoi = thongKeAmDau[amCuoiCuaTu] || 0;
-
             div.innerHTML = `<span>${word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}</span> <span class="difficulty">[${soTuNoi}]</span>`;
-
             div.onclick = () => {
                 const oNhap = document.querySelector('input.input');
                 ganGiaTriInput(oNhap, word);
@@ -742,5 +734,5 @@ function capNhatSuggestBox() {
     }
 }
 setInterval(capNhatSuggestBox, 300);
-    capNhatGiaoDienGoc();
+capNhatGiaoDienGoc();
 })();
