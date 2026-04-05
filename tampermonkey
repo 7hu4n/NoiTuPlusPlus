@@ -476,9 +476,14 @@
         nut.onclick = hanhDong;
         return nut;
     }
-    const nutNapTuDien = taoNut('Load', 'nut-nap', () => {
-        const dauVao = document.createElement('input'); dauVao.type = 'file'; dauVao.accept = '.txt'; dauVao.style.display = 'none';
-        document.body.appendChild(dauVao); dauVao.click();
+const nutNapTuDien = taoNut('Load', 'nut-nap', () => {
+        const dauVao = document.createElement('input');
+        dauVao.type = 'file';
+        dauVao.accept = '.txt';
+        dauVao.style.display = 'none';
+        document.body.appendChild(dauVao);
+        dauVao.click();
+
         dauVao.onchange = e => {
             const tep = e.target.files[0];
             const trinhDoc = new FileReader();
@@ -494,8 +499,11 @@
                 tuDaDung.clear();
                 tuDienDaTai = true;
                 nutNapTuDien.innerHTML = '✔';
+                suggestBox.style.display = 'block';
+                capNhatSuggestBox();
             };
             trinhDoc.readAsText(tep);
+            document.body.removeChild(dauVao);
         };
     });
     const nutChinhSpeed = taoNut(`Speed: ${tocDoCustom}ms`, 'nut-speed', () => {
@@ -631,13 +639,10 @@ suggestStyle.innerHTML = `
     width: 220px;
     max-height: 60vh;
     overflow-y: auto;
-    z-index: 999999;
+    z-index: 9999999 !important;
     background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    backdrop-filter: none !important;
+    display: none;
     padding: 10px;
-    border-radius: 10px;
 }
 .noitu-word-item {
     padding: 6px 8px;
@@ -670,8 +675,21 @@ suggestStyle.innerHTML = `
 document.documentElement.appendChild(suggestStyle);
 
 function capNhatSuggestBox() {
+    if (!tuDienDaTai) {
+        suggestBox.style.display = 'none';
+        return;
+    } else {
+        suggestBox.style.display = 'block';
+    }
+
     const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
-    const wordOnScreen = thanhPhanChu ? thanhPhanChu.textContent.trim() : "";
+
+    if (!thanhPhanChu) {
+        suggestBox.innerHTML = '<div class="noitu-status-msg">Ready.</div>';
+        return;
+    }
+
+    const wordOnScreen = thanhPhanChu.textContent.trim();
 
     if (wordOnScreen !== tuHienTaiTrenSan) {
         tuHienTaiTrenSan = wordOnScreen;
@@ -686,9 +704,6 @@ function capNhatSuggestBox() {
     }
 
     suggestBox.innerHTML = '';
-    if (!tuDienDaTai || !thanhPhanChu) {
-        return;
-    }
 
     const amCuoi = wordOnScreen.toLowerCase().split(/\s+/).pop();
     let danhSach = tuDienTong.filter(t =>
