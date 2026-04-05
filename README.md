@@ -34,3 +34,12 @@ Cách dùng:
   + Chọn file vừa tải → script sẽ load từ điển thành công 
 
 Done!
+
+
+## Update 1.3
+   - Thêm nút custom tốc độ cho Auto
+   - Thêm bảng display từ gợi ý có thể nối
+   - Cải tiến về UI/UX
+   - Cải tiến thuận toán chọn từ cho Auto (Thuật toán DEE)
+   - Cải tiến Anti Ads
+   - Thêm tính năng tự vào trận Ranked/Online (https://www.noitu.fun/rank)
