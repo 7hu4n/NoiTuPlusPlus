@@ -36,14 +36,14 @@ Cách dùng:
 Done!
 
 
-## Update 1.3
-   - Thêm nút custom tốc độ cho Auto
-   - Thêm bảng display từ gợi ý có thể nối
-   - Cải tiến về UI/UX
-   - Cải tiến thuận toán chọn từ cho Auto
-   - Cải tiến Anti Ads
-   - Thêm tính năng tự vào trận Ranked/Online (https://www.noitu.fun/rank)
-
-## Sắp tới
-   - Add thêm từ vào từ điển
-   - ??
+## Update 1.4
+   - Add thêm 4477 từ vào từ điển!
+   - Add tính năng tùy chỉnh màu giao diện
+   - Add Auto Ghép Từ
+   - Đã hỗ trợ lưu settings 
+      + Lưu trạng thái bật tắt của Auto Ghép từ/Auto Nối Từ
+      + Lưu Từ điển
+      + Lưu tốc độ
+      + Lưu màu giao diện
+   - Add nút thùng rác để xóa settings
+   - Cải tiến thuật toán Auto Nối từ
