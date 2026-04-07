@@ -288,7 +288,6 @@ function generateThemeCSS(color) {
         transform: scale(1.1) !important;
         box-shadow: 0 0 30px ${color}b3 !important;
     }
-    /* Thêm CSS cho nút Theme đứng trên Master Button */
     .nut-theme-main {
         position: absolute !important;
         bottom: 80px !important;
