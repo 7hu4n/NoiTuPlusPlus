@@ -3,7 +3,7 @@
 // @namespace https://www.noitu.fun
 // @author 7hu4n
 // @license MIT
-// @version 1.4
+// @version 1.4.1
 // @description .
 // @match https://www.noitu.fun/*
 // @match https://noitu.fun/*
@@ -219,6 +219,10 @@ function generateThemeCSS(color) {
     }
     .nut-theme:hover { box-shadow: 0 0 15px ${color} !important;
     }
+    .nut-reset { border-color: #ff4757 !important; color: #ff4757 !important;
+    }
+    .nut-reset:hover { box-shadow: 0 0 15px #ff4757 !important;
+    }
     .nut-dang-dung {
         background: ${color}33 !important;
         animation: rung 0.4s infinite !important;
@@ -288,6 +292,7 @@ function generateThemeCSS(color) {
         transform: scale(1.1) !important;
         box-shadow: 0 0 30px ${color}b3 !important;
     }
+    /* Thêm CSS cho nút Theme đứng trên Master Button */
     .nut-theme-main {
         position: absolute !important;
         bottom: 80px !important;
@@ -307,6 +312,30 @@ function generateThemeCSS(color) {
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
     }
     #noitu-ui-box.expanded .nut-theme-main {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+    }
+    /* Thêm CSS cho nút Reset đứng trên nút Theme */
+    .nut-reset-main {
+        position: absolute !important;
+        bottom: 140px !important;
+        left: 9px !important;
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50% !important;
+        min-width: unset !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
+        opacity: 0 !important;
+        transform: translateY(20px) !important;
+        pointer-events: none !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    #noitu-ui-box.expanded .nut-reset-main {
         opacity: 1 !important;
         transform: translateY(0) !important;
         pointer-events: auto !important;
@@ -726,6 +755,18 @@ const nutTheme = taoNut('🎨', 'nut-theme nut-theme-main', () => {
     themePicker.classList.add('show');
 });
 
+const nutReset = taoNut('🗑️', 'nut-reset nut-reset-main', () => {
+    if (confirm('Bạn có chắc muốn xóa toàn bộ cài đặt (Màu sắc, Auto, Từ điển...) của Noitu++?')) {
+        localStorage.removeItem('noitu_theme');
+        localStorage.removeItem('noitu_dict');
+        localStorage.removeItem('noitu_auto_ghep');
+        localStorage.removeItem('noitu_thongke');
+        localStorage.removeItem('noitu_auto_noi');
+        localStorage.removeItem('noitu_speed');
+        window.location.reload();
+    }
+});
+
 const subMenu = document.createElement('div');
 subMenu.className = 'sub-menu';
 subMenu.appendChild(nutNapTuDien);
@@ -744,6 +785,7 @@ masterBtn.onclick = () => {
 
 hopDieuKhien.appendChild(masterBtn);
 hopDieuKhien.appendChild(nutTheme);
+hopDieuKhien.appendChild(nutReset);
 hopDieuKhien.appendChild(subMenu);
 
 document.addEventListener('input', (e) => {
@@ -879,8 +921,6 @@ suggestStyle.innerHTML = `
     .noitu-word-item {
         padding: 6px 8px;
         margin-bottom: 4px;
-        border: 1px solid var(--theme-primary, #ff0000) !important;
-        color: var(--theme-primary, #ff0000) !important;
         background: transparent !important;
         cursor: pointer;
         transition: 0.15s;
@@ -898,7 +938,6 @@ suggestStyle.innerHTML = `
     .noitu-status-msg {
         padding: 6px 8px;
         margin-bottom: 4px;
-        color: var(--theme-primary, #ff0000) !important;
         background: transparent !important;
         border: none !important;
         text-align: center;
