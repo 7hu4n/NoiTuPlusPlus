@@ -316,7 +316,6 @@ function generateThemeCSS(color) {
         transform: translateY(0) !important;
         pointer-events: auto !important;
     }
-    /* Thêm CSS cho nút Reset đứng trên nút Theme */
     .nut-reset-main {
         position: absolute !important;
         bottom: 140px !important;
