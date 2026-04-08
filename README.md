@@ -6,10 +6,10 @@ Cách dùng:
 ## C1 : Console (không cần cài gì)
 - vào website: https://www.noitu.fun
 - F12 trên bàn phím → chọn tab Console
-- ***Gõ lệnh sau vào Console rồi nhấn*** **Enter**:
+- Copy code trong "https://github.com/7hu4n/NoiTuPlusPlus/blob/main/console" và paste vào Console → nhấn Enter
+- ***NẾU paste không được, Gõ lệnh sau vào Console rồi nhấn*** **Enter**:
    ```javascript
    allow pasting
-- Copy code trong "https://github.com/7hu4n/NoiTuPlusPlus/blob/main/console" và paste vào Console → nhấn Enter 
 
 ## C2 : Tampermonkey (Dùng vv)
 - Cài extension Tampermonkey
