@@ -1,4 +1,4 @@
-# Exploit dành noitu.fun
+# Exploit dành cho noitu.fun
 
 
 
