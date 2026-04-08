@@ -1,0 +1,1049 @@
+// ==UserScript==
+// @name Noitu++
+// @namespace https://www.noitu.fun
+// @author 7hu4n
+// @license MIT
+// @version 1.4.1
+// @description .
+// @match https://www.noitu.fun/*
+// @match https://noitu.fun/*
+// @run-at document-start
+// @grant none
+// ==/UserScript==
+
+(function () {
+'use strict';
+let dapAnGhepTu_Current = "";
+let dangChayTuDongGhepTu = localStorage.getItem('noitu_auto_ghep') === 'true';
+let currentTheme = JSON.parse(localStorage.getItem('noitu_theme') || '{"primary":"#ff0000","name":"red"}');
+
+function applyTheme(theme) {
+    currentTheme = theme;
+    localStorage.setItem('noitu_theme', JSON.stringify(theme));
+
+    const root = document.documentElement;
+    root.style.setProperty('--theme-primary', theme.primary);
+    const oldStyle = document.getElementById('noitu-main-style');
+    if (oldStyle) oldStyle.remove();
+    const style = document.createElement('style');
+    style.id = 'noitu-main-style';
+    style.innerHTML = generateThemeCSS(theme.primary);
+    document.documentElement.appendChild(style);
+}
+
+function generateThemeCSS(color) {
+    return `
+    html, body, #__next, #main-wrapper, .main,
+    [class*="page_mainContent"], [class*="page_holidayContent"] {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        color: white !important;
+    }
+    .user-modal_modalBox__CmHSF {
+        background: rgba(10, 10, 10, 0.9) !important;
+        border: 1px solid ${color} !important;
+        box-shadow: 0 0 25px ${color}4d !important;
+        backdrop-filter: blur(15px) !important;
+        color: white !important;
+    }
+    .user-modal_avatarImg__YP90p {
+        border: 2px solid ${color} !important;
+        box-shadow: 0 0 15px ${color}80 !important;
+    }
+    .user-modal_nameInput__Fqv0h, .user-modal_bioTextarea__DSGSB {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid ${color}4d !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+    }
+    .user-modal_nameInput__Fqv0h:focus, .user-modal_bioTextarea__DSGSB:focus {
+        border-color: ${color} !important;
+        box-shadow: 0 0 10px ${color}66 !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+    .user-modal_tabsContainer__IkVAx li.is-active a {
+        background-color: ${color}33 !important;
+        border-color: ${color} !important;
+        color: ${color} !important;
+        text-shadow: 0 0 5px ${color} !important;
+    }
+    .user-modal_tabsContainer__IkVAx a {
+        color: #888 !important;
+        border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    .user-modal_tabsContainer__IkVAx a:hover {
+        color: ${color} !important;
+    }
+    .user-modal_coinSection__LCNtB {
+        background: rgba(251, 191, 36, 0.1) !important;
+        border: 1px solid rgba(251, 191, 36, 0.4) !important;
+        padding: 5px 10px !important;
+        border-radius: 8px !important;
+    }
+    .user-modal_giftcodeBtn__XZZr5, .user-modal_actions__4Vohl .button {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid ${color} !important;
+        color: ${color} !important;
+        transition: all 0.2s ease !important;
+    }
+    .user-modal_giftcodeBtn__XZZr5:hover, .user-modal_actions__4Vohl .button:hover {
+        background: ${color}1a !important;
+        box-shadow: 0 0 12px ${color}66 !important;
+        transform: translateY(-2px) !important;
+    }
+    .multiple-mode-lobby_roomBox__r6fVt,
+    .multiple-mode-lobby_searchingBox__Z0JT6 {
+     background: transparent !important;
+     border: 2px solid ${color} !important;
+     box-shadow: none !important;
+    }
+   .multiple-mode-lobby_roomBox__r6fVt *,
+   .multiple-mode-lobby_searchingBox__Z0JT6 * {
+    color: ${color} !important;
+    }
+    .GiftSection_section__z92Gg {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px dashed ${color}4d !important;
+        border-radius: 10px !important;
+    }
+    progress.progress::-webkit-progress-value {
+        background: linear-gradient(90deg, #000, ${color}, #000) !important;
+        background-size: 200% auto !important;
+        animation: head-gradient 3s linear infinite !important;
+    }
+    .breadcrumb,
+    .base-header_bellPosition__e5rVd,
+    .w-100.is-flex.is-justify-content-center.pb-3 {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        cursor: default !important;
+        overflow: hidden !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8,
+    .columns.is-multiline a.column .button,
+    a[href*="trum-ghep-chu"] .button,
+    [class*="game-title_roomBar"] {
+        background: transparent !important;
+        border: 1px solid ${color} !important;
+        outline: none !important;
+        box-shadow: 0 0 10px ${color}33 !important;
+        transition: all 0.2s ease-in-out !important;
+        color: ${color} !important;
+        opacity: 1 !important;
+        height: auto !important;
+        pointer-events: auto !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8:hover,
+    .columns.is-multiline a.column .button:hover,
+    a[href*="trum-ghep-chu"] .button:hover,
+    [class*="game-title_roomBar"]:hover {
+        transform: translateY(-4px) scale(1.02) !important;
+        box-shadow: 0 0 20px ${color}80 !important;
+        background: ${color}0d !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8 span,
+    .multiple-mode-lobby_rankedBtn__EG4j8 strong,
+    .columns.is-multiline a.column .button h2,
+    .columns.is-multiline a.column .button .is-size-6,
+    a[href*="trum-ghep-chu"] h2,
+    a[href*="trum-ghep-chu"] .is-size-7 {
+        color: ${color} !important;
+        text-shadow: 0 0 8px ${color}cc !important;
+        -webkit-text-fill-color: initial !important;
+    }
+    .multiple-mode-lobby_rankedBtn__EG4j8 svg,
+    .columns.is-multiline a.column .button svg,
+    a[href*="trum-ghep-chu"] svg {
+        color: ${color} !important;
+        stroke: ${color} !important;
+        filter: drop-shadow(0 0 5px ${color}cc) !important;
+    }
+    .tag.is-dark {
+        background-color: ${color}33 !important;
+        border: 1px solid ${color} !important;
+        color: ${color} !important;
+    }
+    .field.has-addons .input,
+    .field.has-addons .button {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background: linear-gradient(90deg, #000, ${color}, #000) !important;
+        background-size: 200% auto !important;
+        animation: head-gradient 3s linear infinite !important;
+        color: white !important;
+    }
+    .input:focus, .input:active, .button:focus, .button:active {
+        outline: none !important;
+        border: none !important;
+        box-shadow: 0 0 12px ${color}66 !important;
+    }
+    .glass-btn {
+        backdrop-filter: blur(10px) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        font-family: monospace !important;
+        text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 13px;
+        min-width: 160px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    .glass-btn:hover {
+        transform: scale(1.05) translateY(-2px) !important;
+    }
+    .nut-nap { border-color: #00d2ff !important; color: #00d2ff !important;
+    }
+    .nut-nap:hover { box-shadow: 0 0 15px #00d2ff !important;
+    }
+    .nut-tim { border-color: #9d50bb !important; color: #9d50bb !important;
+    }
+    .nut-tim:hover { box-shadow: 0 0 15px #9d50bb !important;
+    }
+    .nut-speed { border-color: #f7971e !important; color: #f7971e !important;
+    }
+    .nut-speed:hover { box-shadow: 0 0 15px #f7971e !important;
+    }
+    .nut-turbo { border-color: ${color} !important; color: ${color} !important;
+    }
+    .nut-turbo:hover { box-shadow: 0 0 15px ${color} !important;
+    }
+    .nut-theme { border-color: ${color} !important; color: ${color} !important;
+    }
+    .nut-theme:hover { box-shadow: 0 0 15px ${color} !important;
+    }
+    .nut-reset { border-color: #ff4757 !important; color: #ff4757 !important;
+    }
+    .nut-reset:hover { box-shadow: 0 0 15px #ff4757 !important;
+    }
+    .nut-dang-dung {
+        background: ${color}33 !important;
+        animation: rung 0.4s infinite !important;
+    }
+    @keyframes rung {
+        0% { transform: translate(1px, 1px);
+        }
+        50% { transform: translate(-1px, -1px);
+        }
+        100% { transform: translate(1px, 1px);
+        }
+    }
+    .noitu-centered-title {
+        background: linear-gradient(90deg, #000, ${color}, #000);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: head-gradient 3s linear infinite;
+        font-weight: 800; font-size: 3.5rem; text-align: center;
+    }
+    @keyframes head-gradient {
+        0% { background-position: 0% 50%;
+        }
+        50% { background-position: 100% 50%;
+        }
+        100% { background-position: 0% 50%;
+        }
+    }
+    .glowing-heart {
+        display: inline-block;
+        color: ${color};
+        animation: heart-breathe 1.2s ease-in-out infinite;
+    }
+    @keyframes heart-breathe {
+        0%, 100% { transform: scale(1);
+        filter: drop-shadow(0 0 2px ${color}); }
+        50% { transform: scale(1.3);
+        filter: drop-shadow(0 0 15px ${color}); }
+    }
+    #noitu-ui-box {
+        position:fixed;
+        bottom:20px;
+        left:20px;
+        z-index:999999;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        gap:12px;
+    }
+    #noitu-ui-box .master-btn {
+        width: 68px;
+        height: 68px;
+        border-radius: 50% !important;
+        background: rgba(255,255,255,0.08) !important;
+        border: 3px solid ${color} !important;
+        color: ${color} !important;
+        font-size: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 0 20px ${color}80 !important;
+        transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
+        cursor: pointer !important;
+    }
+    #noitu-ui-box .master-btn:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 0 30px ${color}b3 !important;
+    }
+    /* Thêm CSS cho nút Theme đứng trên Master Button */
+    .nut-theme-main {
+        position: absolute !important;
+        bottom: 80px !important;
+        left: 9px !important;
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50% !important;
+        min-width: unset !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
+        opacity: 0 !important;
+        transform: translateY(20px) !important;
+        pointer-events: none !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    #noitu-ui-box.expanded .nut-theme-main {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+    }
+    /* Thêm CSS cho nút Reset đứng trên nút Theme */
+    .nut-reset-main {
+        position: absolute !important;
+        bottom: 140px !important;
+        left: 9px !important;
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50% !important;
+        min-width: unset !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
+        opacity: 0 !important;
+        transform: translateY(20px) !important;
+        pointer-events: none !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    #noitu-ui-box.expanded .nut-reset-main {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+    }
+    #noitu-ui-box .sub-menu {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        opacity: 0;
+        transform: scale(0.85) translateX(-40px);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        pointer-events: none;
+    }
+    #noitu-ui-box.expanded .sub-menu {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+        pointer-events: auto;
+    }
+    #noitu-ui-box .sub-menu .glass-btn {
+        opacity: 0;
+        transform: scale(0.3) translateX(-50px) !important;
+        transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    }
+    #noitu-ui-box.expanded .sub-menu .glass-btn {
+        opacity: 1 !important;
+        transform: scale(1) translateX(0) !important;
+    }
+    .tanthuan-wave {
+        display: inline-block;
+        color: #00d2ff; font-weight: bold;
+        text-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
+        animation: sea-wave 2.8s ease-in-out infinite;
+    }
+    @keyframes sea-wave {
+        0%, 100% { transform: translateY(0) rotate(0deg);
+        }
+        25% { transform: translateY(-3px) rotate(3deg);
+        }
+        50% { transform: translateY(2px) rotate(-2deg);
+        }
+        75% { transform: translateY(-2px) rotate(2deg);
+        }
+    }
+    .modal-card {
+        background: rgba(10, 10, 10, 0.95) !important;
+        border: 2px solid ${color} !important;
+        box-shadow: 0 0 35px ${color}80 !important;
+        backdrop-filter: blur(20px) !important;
+    }
+    .modal-card-head {
+        background: rgba(15, 15, 15, 0.95) !important;
+        border-bottom: 1px solid ${color} !important;
+    }
+    .tabs.is-toggle li.is-active a {
+        background-color: ${color}40 !important;
+        border-color: ${color} !important;
+        color: ${color} !important;
+        text-shadow: 0 0 8px ${color} !important;
+    }
+    .ShopModal_itemGrid__wr8Zh {
+        gap: 12px !important;
+    }
+    .ShopModal_itemCard__F6Eao {
+        background: rgba(255,255,255,0.04) !important;
+        border: 1px solid ${color}4d !important;
+        border-radius: 14px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 0 15px ${color}26 !important;
+    }
+    .ShopModal_itemCard__F6Eao:hover {
+        transform: translateY(-6px) scale(1.03) !important;
+        border-color: ${color} !important;
+        box-shadow: 0 0 30px ${color}99 !important;
+    }
+    .ShopModal_itemName__zt5_U {
+        color: ${color} !important;
+        text-shadow: 0 0 10px ${color}b3 !important;
+    }
+    .ShopModal_itemDesc__31PCU {
+        color: #bbbbbb !important;
+    }
+    .ShopModal_itemPrice__ce3r_ {
+        color: #fbbf24 !important;
+        text-shadow: 0 0 8px rgba(251,191,36,0.6) !important;
+    }
+    .ShopModal_itemAction__G7ERr .button {
+        background: rgba(255,255,255,0.06) !important;
+        border: 1px solid ${color} !important;
+        color: ${color} !important;
+        transition: all 0.25s ease !important;
+    }
+    .ShopModal_itemAction__G7ERr .button:hover {
+        background: ${color}26 !important;
+        box-shadow: 0 0 20px ${color} !important;
+        transform: translateY(-2px) !important;
+    }
+    .tag.is-danger.is-light {
+        background-color: ${color}33 !important;
+        color: ${color} !important;
+        border: 1px solid ${color} !important;
+    }
+    .UserAvatar_wrapper__AZyFE {
+        box-shadow: 0 0 20px ${color}66 !important;
+        transition: all 0.3s ease !important;
+    }
+    .modal-close {
+        color: ${color} !important;
+        filter: drop-shadow(0 0 8px ${color}) !important;
+    }
+    .ShopModal_itemCard__F6Eao {
+        background: #000000 !important;
+    }
+    .modal-card-body {
+        background: #000000 !important;
+    }
+    .modal-background {
+        background: transparent !important;
+    }
+    .noitu-word-item {
+        border: 1px solid ${color} !important;
+        color: ${color} !important;
+    }
+    .noitu-status-msg {
+        color: ${color} !important;
+    }
+    #noitu-theme-picker {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(10, 10, 10, 0.95);
+        border: 2px solid ${color};
+        border-radius: 15px;
+        padding: 25px;
+        z-index: 99999999;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 0 40px ${color}80;
+        display: none;
+    }
+    #noitu-theme-picker.show {
+        display: block;
+    }
+    .theme-picker-title {
+        color: ${color};
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px ${color};
+    }
+    .theme-close {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid ${color};
+        color: ${color};
+        padding: 10px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    .theme-close:hover {
+        background: ${color}33;
+        box-shadow: 0 0 15px ${color};
+    }
+`;
+}
+
+const originalOpen = XMLHttpRequest.prototype.open;
+const originalSend = XMLHttpRequest.prototype.send;
+XMLHttpRequest.prototype.open = function(method, url) {
+    this._url = url;
+    return originalOpen.apply(this, arguments);
+};
+XMLHttpRequest.prototype.send = function() {
+    this.addEventListener('load', function() {
+        if (this._url && this._url.includes('get-word')) {
+            try {
+                const response = JSON.parse(this.responseText);
+                if (response && response.wordBase64Encoded) {
+                    dapAnGhepTu_Current = decodeURIComponent(escape(atob(response.wordBase64Encoded)));
+
+                    if (dangChayTuDongGhepTu) {
+                        setTimeout(() => {
+                            superSpeedClick(dapAnGhepTu_Current);
+                        }, tocDoCustom);
+                    }
+                }
+            } catch (e) {}
+        }
+    });
+    return originalSend.apply(this, arguments);
+};
+
+function superSpeedClick(word) {
+    if (!word) return;
+    const cleanWord = word.trim();
+    let targets = cleanWord.split(/\s+/);
+
+    const getButtons = () => Array.from(document.querySelectorAll('.stick-answer-input_character__N56_X'));
+
+    let currentIndex = 0;
+    const performClick = () => {
+        if (currentIndex >= targets.length) return;
+        const buttons = getButtons();
+        const currentSearch = targets[currentIndex].toLowerCase().trim();
+
+        const targetBtn = buttons.find(btn =>
+            btn.textContent.trim().toLowerCase() === currentSearch
+        );
+        if (targetBtn) {
+            targetBtn.click();
+            currentIndex++;
+            setTimeout(performClick, tocDoCustom);
+        } else {
+            targets = cleanWord.replace(/\s+/g, '').split('');
+            performClick();
+        }
+    };
+
+    performClick();
+}
+
+const antiAdsStyle = document.createElement('style');
+antiAdsStyle.innerHTML = `
+    [id*="google_ads_"], [class*="google_ads_"],
+    .google-vignette-test, #google_vignette, .vignette-reveal,
+    ins.adsbygoogle, div[data-ad-client],
+    [class*="ads"], [id*="ads"], [id*="ad-"], [class*="ad-"],
+    .side-rail-ads, .adsense-banner, .ad-banner, .ad-container,
+    iframe[src*="ads"], iframe[src*="google"], iframe[src*="doubleclick"],
+    [class*="advert"], [class*="sponsor"], [class*="promotion"],
+    .ad, .ads, .advertisement, .sponsored, .promo {
+        background: transparent !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        user-select: none !important;
+    }
+    html, body {
+        overflow: auto !important;
+        position: static !important;
+    }
+    .lucide-gamepad2, .lucide-gamepad-2,
+    svg.lucide.lucide-gamepad2, svg.lucide.lucide-gamepad-2 {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: visible !important;
+        pointer-events: auto !important;
+    }
+    .lucide-gamepad2 line, .lucide-gamepad2 path,
+    .lucide-gamepad-2 line, .lucide-gamepad-2 path {
+        stroke: currentColor !important;
+        opacity: 1 !important;
+    }
+`;
+document.documentElement.appendChild(antiAdsStyle);
+
+
+applyTheme(currentTheme);
+
+let tuDienTong = JSON.parse(localStorage.getItem('noitu_dict') || '[]');
+let tuDaDung = new Set();
+let thongKeAmDau = JSON.parse(localStorage.getItem('noitu_thongke') || '{}');
+let dangChayTuDong = localStorage.getItem('noitu_auto_noi') === 'true';
+let vongLapTuDong = null;
+let tocDoCustom = parseInt(localStorage.getItem('noitu_speed')) || 500;
+let isExpanded = false;
+let tuDienDaTai = tuDienTong.length > 0;
+let tuHienTaiTrenSan = "";
+let coTheHienThiGoiY = false;
+let timerDelayGoiY = null;
+
+function capNhatGiaoDienGoc() {
+    const tieuDe = document.querySelector('.title.is-1') || document.querySelector('h1');
+    if (tieuDe && !tieuDe.classList.contains('noitu-centered-title')) {
+        tieuDe.innerHTML = 'NoiTu++';
+        tieuDe.classList.add('noitu-centered-title');
+    }
+    const dongPhu = document.querySelector('p.has-text-centered.is-size-5');
+    if (dongPhu && !dongPhu.innerHTML.includes('tanthuan-wave')) {
+        dongPhu.innerHTML = `Made with <span class="glowing-heart">💗</span> - <span class="tanthuan-wave">TanThuan</span>`;
+    }
+}
+
+function ganGiaTriInput(oNhap, giaTri) {
+    if (!oNhap) return;
+    const giaTriCu = oNhap.value;
+    oNhap.value = giaTri;
+    const trinhTheoDoi = oNhap._valueTracker;
+    if (trinhTheoDoi) trinhTheoDoi.setValue(giaTriCu);
+    oNhap.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function timTuOutplay(danhSach) {
+    if (!danhSach || danhSach.length === 0) return null;
+    return danhSach.sort((a, b) => {
+        const amCuoiA = a.toLowerCase().split(/\s+/).pop();
+        const amCuoiB = b.toLowerCase().split(/\s+/).pop();
+        const diemA = thongKeAmDau[amCuoiA] || 0;
+        const diemB = thongKeAmDau[amCuoiB] || 0;
+        return diemA - diemB;
+    })[0];
+}
+
+function logicGuiTu(laTuDong = true) {
+    if (laTuDong) {
+        const nutChoiLai = document.querySelector('button[class*="game-result-modal_playAgainBtn"]');
+        if (nutChoiLai) { tuDaDung.clear(); nutChoiLai.click(); return; }
+        const nutNgauNhien = document.querySelector('.ranked-lobby_rankCardRandom__Br_il');
+        if (nutNgauNhien) { tuDaDung.clear(); nutNgauNhien.click(); return; }
+    }
+    const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
+    if (!thanhPhanChu) return;
+    const amCuoi = thanhPhanChu.textContent.trim().toLowerCase().split(/\s+/).pop();
+    const danhSachHopLe = tuDienTong.filter(t => !tuDaDung.has(t) && t.toLowerCase().startsWith(amCuoi + " "));
+    const tuTiepTheo = timTuOutplay(danhSachHopLe);
+    if (tuTiepTheo) {
+        const oNhap = document.querySelector('input.input');
+        const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
+        if (oNhap) {
+            ganGiaTriInput(oNhap, tuTiepTheo);
+            tuDaDung.add(tuTiepTheo);
+            if (laTuDong) {
+                setTimeout(() => { if (nutGui) nutGui.click(); }, 100);
+            }
+        }
+    } else if (laTuDong) {
+        const nutBoQua = document.querySelector('button.button.is-text.is-medium');
+        if (nutBoQua) nutBoQua.click();
+    }
+}
+
+const hopDieuKhien = document.createElement('div');
+hopDieuKhien.id = 'noitu-ui-box';
+function taoNut(vanBan, lopCss, hanhDong) {
+    const nut = document.createElement('button');
+    nut.innerHTML = vanBan;
+    nut.className = `glass-btn ${lopCss}`;
+    nut.onclick = hanhDong;
+    return nut;
+}
+
+const nutNapTuDien = taoNut(tuDienDaTai ? '✔' : 'Load', 'nut-nap', () => {
+    const dauVao = document.createElement('input');
+    dauVao.type = 'file';
+    dauVao.accept = '.txt';
+    dauVao.style.display = 'none';
+    document.body.appendChild(dauVao);
+    dauVao.click();
+    dauVao.onchange = e => {
+        const tep = e.target.files[0];
+        const trinhDoc = new FileReader();
+        trinhDoc.onload = ev => {
+            const lines = ev.target.result.split(/\r?\n/);
+            tuDienTong = lines.map(d => d.trim()).filter(d => d.split(/\s+/).length === 2);
+            thongKeAmDau = {};
+            tuDienTong.forEach(tu => {
+                const chuDau = tu.toLowerCase().split(/\s+/)[0];
+                thongKeAmDau[chuDau] = (thongKeAmDau[chuDau] || 0) + 1;
+            });
+            tuDaDung.clear();
+            tuDienDaTai = true;
+            localStorage.setItem('noitu_dict', JSON.stringify(tuDienTong));
+            localStorage.setItem('noitu_thongke', JSON.stringify(thongKeAmDau));
+            nutNapTuDien.innerHTML = '✔';
+            suggestBox.style.display = 'block';
+            capNhatSuggestBox();
+        };
+        trinhDoc.readAsText(tep);
+        document.body.removeChild(dauVao);
+    };
+});
+const nutChinhSpeed = taoNut(`Speed: ${tocDoCustom}ms`, 'nut-speed', () => {
+    let inputSpeed = prompt("nhập tốc độ delay (ms) cho auto nối/ghép từ:", tocDoCustom);
+    if (inputSpeed !== null && !isNaN(inputSpeed) && inputSpeed > 0) {
+        tocDoCustom = parseInt(inputSpeed);
+        localStorage.setItem('noitu_speed', tocDoCustom);
+        nutChinhSpeed.innerHTML = `Speed: ${tocDoCustom}ms`;
+        if (dangChayTuDong) kichHoatTuDong();
+    }
+});
+const nutAutoTurbo = taoNut(dangChayTuDong ? 'Stop Nối Từ' : 'Auto Nối Từ', 'nut-turbo', () => kichHoatTuDong());
+if (dangChayTuDong) nutAutoTurbo.classList.add('nut-dang-dung');
+const nutAutoGhepTu = taoNut(dangChayTuDongGhepTu ? 'Stop Ghép Từ' : 'Auto Ghép Từ', 'nut-tim', () => {
+    dangChayTuDongGhepTu = !dangChayTuDongGhepTu;
+    localStorage.setItem('noitu_auto_ghep', dangChayTuDongGhepTu);
+    if (dangChayTuDongGhepTu) {
+        nutAutoGhepTu.classList.add('nut-dang-dung');
+        nutAutoGhepTu.innerHTML = 'Stop Ghép Từ';
+        if (dapAnGhepTu_Current) {
+            setTimeout(() => {
+                superSpeedClick(dapAnGhepTu_Current);
+            }, tocDoCustom);
+        }
+    } else {
+        nutAutoGhepTu.classList.remove('nut-dang-dung');
+        nutAutoGhepTu.innerHTML = 'Auto Ghép Từ';
+    }
+});
+if (dangChayTuDongGhepTu) nutAutoGhepTu.classList.add('nut-dang-dung');
+
+const themePicker = document.createElement('div');
+themePicker.id = 'noitu-theme-picker';
+themePicker.innerHTML = `
+    <div class="theme-picker-title">chọn màu</div>
+    <div style="text-align:center; margin-bottom: 20px;">
+        <input type="color" id="noitu-color-input" value="${currentTheme.primary}"
+               style="width:100%; height:60px; cursor:pointer; border:none; background:none; padding: 0;">
+    </div>
+    <button class="theme-close">đóng</button>
+`;
+
+const nutTheme = taoNut('🎨', 'nut-theme nut-theme-main', () => {
+    themePicker.classList.add('show');
+});
+
+const nutReset = taoNut('🗑️', 'nut-reset nut-reset-main', () => {
+    if (confirm('Bạn có chắc muốn xóa toàn bộ cài đặt (Màu sắc, Auto, Từ điển...) của Noitu++?')) {
+        localStorage.removeItem('noitu_theme');
+        localStorage.removeItem('noitu_dict');
+        localStorage.removeItem('noitu_auto_ghep');
+        localStorage.removeItem('noitu_thongke');
+        localStorage.removeItem('noitu_auto_noi');
+        localStorage.removeItem('noitu_speed');
+        window.location.reload();
+    }
+});
+
+const subMenu = document.createElement('div');
+subMenu.className = 'sub-menu';
+subMenu.appendChild(nutNapTuDien);
+subMenu.appendChild(nutChinhSpeed);
+subMenu.appendChild(nutAutoTurbo);
+subMenu.appendChild(nutAutoGhepTu);
+
+const masterBtn = document.createElement('button');
+masterBtn.className = 'master-btn';
+masterBtn.innerHTML = '+';
+masterBtn.onclick = () => {
+    isExpanded = !isExpanded;
+    hopDieuKhien.classList.toggle('expanded', isExpanded);
+    masterBtn.innerHTML = isExpanded ? '×' : '+';
+};
+
+hopDieuKhien.appendChild(masterBtn);
+hopDieuKhien.appendChild(nutTheme);
+hopDieuKhien.appendChild(nutReset);
+hopDieuKhien.appendChild(subMenu);
+
+document.addEventListener('input', (e) => {
+    if (e.target.id === 'noitu-color-input') {
+        const selectedColor = e.target.value;
+        applyTheme({ primary: selectedColor, name: 'custom' });
+    }
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('theme-close')) {
+        themePicker.classList.remove('show');
+    }
+});
+
+function kichHoatTuDong() {
+    if (dangChayTuDong) {
+        dangChayTuDong = false;
+        clearInterval(vongLapTuDong);
+        localStorage.setItem('noitu_auto_noi', dangChayTuDong);
+        capNhatTrangThaiNut(); return;
+    }
+    clearInterval(vongLapTuDong);
+    dangChayTuDong = true;
+    localStorage.setItem('noitu_auto_noi', dangChayTuDong);
+    capNhatTrangThaiNut();
+    vongLapTuDong = setInterval(() => logicGuiTu(true), tocDoCustom);
+}
+
+function capNhatTrangThaiNut() {
+    if (!dangChayTuDong) {
+        nutAutoTurbo.classList.remove('nut-dang-dung');
+        nutAutoTurbo.innerHTML = 'Auto Nối Từ';
+    } else {
+        nutAutoTurbo.classList.add('nut-dang-dung');
+        nutAutoTurbo.innerHTML = 'Stop Nối Từ';
+    }
+}
+
+if (dangChayTuDong) {
+    vongLapTuDong = setInterval(() => logicGuiTu(true), tocDoCustom);
+}
+
+if ((dangChayTuDong || dangChayTuDongGhepTu) && window.location.href.includes('/online')) {
+    window.location.href = 'https://www.noitu.fun/rank';
+}
+
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        const nutGui = document.querySelector('button[class*="transform-hover"]') || document.querySelector('button.is-large');
+        if (nutGui) nutGui.click();
+    }
+});
+
+const canvas = document.createElement('canvas');
+canvas.id = 'noitu-particle-canvas';
+canvas.style.position = 'fixed';
+canvas.style.top = '0';
+canvas.style.left = '0';
+canvas.style.width = '100vw';
+canvas.style.height = '100vh';
+canvas.style.zIndex = '0';
+canvas.style.pointerEvents = 'none';
+const ctx = canvas.getContext('2d');
+let width, height;
+
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+const particles = [];
+const numParticles = 80;
+const maxDistance = 150;
+for (let i = 0; i < numParticles; i++) {
+    particles.push({
+        x: Math.random() * 1920,
+        y: Math.random() * 1080,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        radius: Math.random() * 2 + 1.5
+    });
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < numParticles; i++) {
+        let p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fill();
+    }
+    for (let i = 0; i < numParticles; i++) {
+        for (let j = i + 1; j < numParticles; j++) {
+            let p1 = particles[i];
+            let p2 = particles[j];
+            let dx = p1.x - p2.x; let dy = p1.y - p2.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < maxDistance) {
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                let alpha = 1 - (dist / maxDistance);
+                ctx.strokeStyle = `rgba(${parseInt(currentTheme.primary.slice(1,3), 16)}, ${parseInt(currentTheme.primary.slice(3,5), 16)}, ${parseInt(currentTheme.primary.slice(5,7), 16)}, ${alpha})`;
+                ctx.lineWidth = 1; ctx.stroke();
+            }
+        }
+    }
+    requestAnimationFrame(animateParticles);
+}
+
+const suggestBox = document.createElement('div');
+suggestBox.id = 'noitu-suggest-box';
+
+const suggestStyle = document.createElement('style');
+suggestStyle.innerHTML = `
+    #noitu-suggest-box {
+        position: fixed;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        width: 220px;
+        max-height: 60vh;
+        overflow-y: auto;
+        z-index: 9999999 !important;
+        background: transparent !important;
+        display: none;
+        padding: 10px;
+    }
+    .noitu-word-item {
+        padding: 6px 8px;
+        margin-bottom: 4px;
+        background: transparent !important;
+        cursor: pointer;
+        transition: 0.15s;
+        display: flex;
+        justify-content: space-between;
+    }
+    .noitu-word-item:hover {
+        background: transparent !important;
+        transform: translateX(4px);
+    }
+    .noitu-word-item span.difficulty {
+        font-size: 10px;
+        opacity: 0.7;
+    }
+    .noitu-status-msg {
+        padding: 6px 8px;
+        margin-bottom: 4px;
+        background: transparent !important;
+        border: none !important;
+        text-align: center;
+    }
+`;
+document.documentElement.appendChild(suggestStyle);
+function capNhatSuggestBox() {
+    const isGhepTuMode = document.querySelector('.stick-answer-input_character__N56_X') || window.location.href.includes('trum-ghep-chu');
+    if (isGhepTuMode) {
+        suggestBox.style.display = 'block';
+        suggestBox.innerHTML = '';
+        if (dapAnGhepTu_Current) {
+            const div = document.createElement('div');
+            div.className = 'noitu-word-item';
+            div.innerHTML = `<span>${dapAnGhepTu_Current}</span> <span class="difficulty">[Ghép Từ]</span>`;
+            div.onclick = () => {
+                superSpeedClick(dapAnGhepTu_Current);
+            };
+            suggestBox.appendChild(div);
+        } else {
+            suggestBox.innerHTML = '<div class="noitu-status-msg">đang chờ server...</div>';
+        }
+        return;
+    }
+
+    if (!tuDienDaTai) {
+        suggestBox.style.display = 'none';
+        return;
+    } else {
+        suggestBox.style.display = 'block';
+    }
+
+    const thanhPhanChu = document.querySelector('[class*="wordDetailWord"]');
+    if (!thanhPhanChu) {
+        suggestBox.innerHTML = '<div class="noitu-status-msg"> </div>';
+        return;
+    }
+
+    const wordOnScreen = thanhPhanChu.textContent.trim();
+    if (wordOnScreen !== tuHienTaiTrenSan) {
+        tuHienTaiTrenSan = wordOnScreen;
+        coTheHienThiGoiY = false;
+        clearTimeout(timerDelayGoiY);
+        if (wordOnScreen !== "") {
+            timerDelayGoiY = setTimeout(() => {
+                coTheHienThiGoiY = true;
+            }, 700);
+        }
+    }
+
+    suggestBox.innerHTML = '';
+    const amCuoi = wordOnScreen.toLowerCase().split(/\s+/).pop();
+    let danhSach = tuDienTong.filter(t =>
+        !tuDaDung.has(t) &&
+        t.toLowerCase().startsWith(amCuoi + " ")
+    );
+    danhSach.sort((a, b) => {
+        const cA = a.toLowerCase().split(/\s+/).pop();
+        const cB = b.toLowerCase().split(/\s+/).pop();
+        return (thongKeAmDau[cA] || 0) - (thongKeAmDau[cB] || 0);
+    });
+    if (danhSach.length === 0) {
+        const msg = document.createElement('div');
+        msg.className = 'noitu-status-msg';
+        msg.textContent = 'hết từ rồi :( ';
+        suggestBox.appendChild(msg);
+    } else {
+        danhSach.slice(0, 30).forEach(word => {
+            const div = document.createElement('div');
+            div.className = 'noitu-word-item';
+            const amCuoiCuaTu = word.toLowerCase().split(/\s+/).pop();
+            const soTuNoi = thongKeAmDau[amCuoiCuaTu] || 0;
+
+            div.innerHTML = `<span>${word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}</span> <span class="difficulty">[${soTuNoi}]</span>`;
+            div.onclick = () => {
+                const oNhap = document.querySelector('input.input');
+                ganGiaTriInput(oNhap, word);
+                if (oNhap) oNhap.focus();
+            };
+
+            suggestBox.appendChild(div);
+        });
+    }
+}
+
+setInterval(() => {
+    capNhatGiaoDienGoc();
+    if (document.body) {
+        if (!document.getElementById('noitu-ui-box')) {
+            document.body.appendChild(hopDieuKhien);
+        }
+        if (!document.getElementById('noitu-particle-canvas')) {
+            document.body.appendChild(canvas);
+            resize();
+            animateParticles();
+        }
+        if (!document.getElementById('noitu-suggest-box')) {
+            document.body.appendChild(suggestBox);
+            capNhatSuggestBox();
+        }
+        if (!document.getElementById('noitu-theme-picker')) {
+            document.body.appendChild(themePicker);
+        }
+    }
+}, 200);
+
+setInterval(capNhatSuggestBox, 300);
+
+})();
