@@ -1,4 +1,4 @@
-# Exploit tự động nối từ trong noitu.fun.
+# Exploit dành noitu.fun
 
 
 
