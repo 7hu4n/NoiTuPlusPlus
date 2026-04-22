@@ -30,7 +30,7 @@ Cách dùng:
 ### Bước cuối cùng: Load file từ điển (Cả 2 cách)
   + Click vào nút tròn (+)
   + 4 nút xuất hiện → click nút loadfile
-  + Tải file https://github.com/7hu4n/NoiTuPlusPlus/blob/main/valid.txt về 
+  + Tải file https://github.com/7hu4n/NoiTuPlusPlus/blob/main/vaild.txt về 
   + Chọn file vừa tải → script sẽ load từ điển thành công 
 
 Done!
